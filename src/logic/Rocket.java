@@ -1,9 +1,11 @@
 package logic;
 
 import exceptions.OutOfPropellantException;
+import graphics.DrawingUtility;
 import graphics.IRenderable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 
 public class Rocket implements IRenderable{
@@ -15,7 +17,7 @@ public class Rocket implements IRenderable{
 	private int verticalSpeed, horizontalSpeed;
 	private int pitch;
 	private int stageCount;
-	private Image rocketImage;
+	//private Image rocketImage;
 	
 	public Rocket(int x, int y, RocketStage firstStage, RocketStage secondStage){
 		this.firstStage = firstStage;
@@ -26,7 +28,7 @@ public class Rocket implements IRenderable{
 		this.horizontalSpeed = 0;
 		this.width = 20;
 		this.height = 100;
-		
+		//loadResource();
 	}
 	
 	public void propel() throws OutOfPropellantException {
@@ -82,8 +84,8 @@ public class Rocket implements IRenderable{
 
 	@Override
 	public void render(GraphicsContext gc) {
-		gc.setFill(Color.RED);
-		gc.fillRect(x, y, width, height);
-		
+		/*gc.setFill(Color.RED);
+		gc.fillRect(x, y, width, height);*/
+		gc.drawImage(DrawingUtility.rocketImage, x, y);
 	}
 }

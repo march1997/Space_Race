@@ -1,5 +1,6 @@
 package main;
 
+import graphics.DrawingUtility;
 import graphics.GameScreen;
 import graphics.RenderableHolder;
 import javafx.application.Application;
@@ -14,6 +15,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		DrawingUtility.loadResource();
+		
 		GameScreen root = new GameScreen();
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
