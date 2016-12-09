@@ -1,5 +1,6 @@
 package main;
 
+import graphics.DrawingUtility;
 import graphics.GameScreen;
 import graphics.RenderableHolder;
 import javafx.application.Application;
@@ -11,8 +12,15 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+<<<<<<< HEAD
 		GameScreen gameScreen = new GameScreen();
 		Scene scene = new Scene(gameScreen);
+=======
+		DrawingUtility.loadResource();
+		
+		GameScreen root = new GameScreen();
+		Scene scene = new Scene(root);
+>>>>>>> origin/master
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Space Race");
 		primaryStage.setResizable(false);
