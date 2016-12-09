@@ -12,6 +12,7 @@ public class Rocket implements IRenderable{
 	
 	private final RocketStage firstStage;
 	private final RocketStage secondStage;
+	private final Payload payload;
 	
 	private int x, y, width, height;
 	private double verticalSpeed, horizontalSpeed;
@@ -22,6 +23,8 @@ public class Rocket implements IRenderable{
 	public Rocket(int x, int y, RocketStage firstStage, RocketStage secondStage, Payload payload){
 		this.firstStage = firstStage;
 		this.secondStage = secondStage;
+		this.payload = payload;
+		this.stageCount = 2;
 		this.x = x;
 		this.y = y;
 		this.verticalSpeed = -4;
@@ -38,8 +41,7 @@ public class Rocket implements IRenderable{
 		} else if(stageCount == 1) {
 			thrust = secondStage.propel();
 		} else {
-			//TODO all stages detached
-			thrust = null;
+			thrust = new Thrust(0, 0);
 		}
 		accelerate(thrust);
 	}
@@ -54,15 +56,18 @@ public class Rocket implements IRenderable{
 		y += verticalSpeed;
 	}
 	
+	public void detachStage() {
+		stageCount -= 1;
+	}
+	
 	public double getMass() {
 		double rocketMass;
 		if(stageCount == 2) {
-			rocketMass = firstStage.getMass() + secondStage.getMass();
+			rocketMass = firstStage.getMass() + secondStage.getMass() + payload.getMass();
 		} else if(stageCount == 1) {
-			rocketMass = secondStage.getMass();
+			rocketMass = secondStage.getMass() + payload.getMass();
 		} else {
-			//TODO all stages detached
-			rocketMass = 0;
+			rocketMass = payload.getMass();
 		}
 		return rocketMass; 
 	}

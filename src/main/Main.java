@@ -1,12 +1,11 @@
 package main;
 
-import graphics.DrawingUtility;
-import graphics.GameScreen;
-import graphics.RenderableHolder;
+import graphics.*;
+import rocket.*;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import rocket.*;
 
 public class Main extends Application {
 
