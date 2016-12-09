@@ -16,7 +16,7 @@ public class Rocket implements IRenderable{
 	
 	private int x, y, width, height;
 	private double verticalSpeed, horizontalSpeed;
-	private int pitch;
+	private double pitch;
 	private int stageCount;
 	//private Image rocketImage;
 	
@@ -82,7 +82,7 @@ public class Rocket implements IRenderable{
 	
 	@Override
 	public String toString() {
-		return "(x:" + x + ", y:" + y + ", hs:" + horizontalSpeed + ", vs:" + verticalSpeed + ")";
+		return "(x:" + x + ", y:" + y + ", hs:" + (int)horizontalSpeed + ", vs:" + (int)verticalSpeed + ", p:" + (int)pitch + ")";
 		
 	}
 	
