@@ -25,15 +25,12 @@ public class GameScreen extends StackPane{
 	}
 	
 	public void render() {
-<<<<<<< HEAD
 		gc.setFill(Color.BLACK);
 		gc.clearRect(0, 0, WIDTH, HEIGHT);
 		gc.fillRect(0, 0, WIDTH, HEIGHT);
-=======
 		gc.setFill(Color.SKYBLUE);
 		gc.clearRect(0, 0, 480, 720);
 		gc.fillRect(0, 0, 480, 720);
->>>>>>> origin/master
 		for(IRenderable r:RenderableHolder.getInstance().getEntities()) {
 			r.render(gc);
 			System.out.println("Rendered object: " + r);
