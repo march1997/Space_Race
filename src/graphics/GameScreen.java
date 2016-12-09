@@ -30,9 +30,9 @@ public class GameScreen extends StackPane{
 		gc.fillRect(0, 0, WIDTH, HEIGHT);
 		for(IRenderable r:RenderableHolder.getInstance().getEntities()) {
 			r.render(gc);
-			System.out.println("Rendered object: " + r);
+//			System.out.println("Rendered object: " + r);
 		}
-		System.out.println("---------");
+//		System.out.println("---------");
 	}
 
 }

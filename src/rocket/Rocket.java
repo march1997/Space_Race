@@ -27,7 +27,7 @@ public class Rocket implements IRenderable{
 		this.stageCount = 2;
 		this.x = x;
 		this.y = y;
-		this.verticalSpeed = -4;
+		this.verticalSpeed = 0;
 		this.horizontalSpeed = 0;
 		this.width = 20;
 		this.height = 100;
@@ -47,8 +47,9 @@ public class Rocket implements IRenderable{
 	}
 	
 	public void accelerate(Thrust t) {
-		verticalSpeed += t.getVerticalAcceleration(getMass());
+		verticalSpeed -= t.getVerticalAcceleration(getMass());
 		horizontalSpeed += t.getHorizontalAcceleration(getMass());
+		//TODO no gravity yet
 	}
 	
 	public void move() {
@@ -77,5 +78,19 @@ public class Rocket implements IRenderable{
 		/*gc.setFill(Color.RED);
 		gc.fillRect(x, y, width, height);*/
 		gc.drawImage(DrawingUtility.rocketImage, x, y);
+	}
+	
+	@Override
+	public String toString() {
+		return "(x:" + x + ", y:" + y + ", hs:" + horizontalSpeed + ", vs:" + verticalSpeed + ")";
+		
+	}
+	
+	public int getCenterOfMassX() {
+		return x + width/2;
+	}
+	
+	public int getCenterOfMassY() {
+		return y + height/2;
 	}
 }

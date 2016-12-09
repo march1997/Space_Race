@@ -1,13 +1,20 @@
 package main;
 
+import exceptions.OutOfPropellantException;
 import graphics.*;
 import rocket.*;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	
+	Rocket rocket;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -20,9 +27,10 @@ public class Main extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
+		gameScreen.requestFocus();
 		addListener(gameScreen);
 		
-		Rocket rocket = new Rocket(220, 500, new RocketStage(5, new Engine(5, 5), new Propellant(20), 20), new RocketStage(2, new Engine(2, 2), new Propellant(4), 4), null);
+		rocket = new Rocket(220, 500, new RocketStage(5, new Engine(5, 50), new Propellant(200), 20), new RocketStage(2, new Engine(2, 2), new Propellant(4), 4), new Payload(2));
 		RenderableHolder.getInstance().getEntities().add(rocket);
 		
 		Thread thread = new Thread(new Runnable() {
@@ -30,6 +38,7 @@ public class Main extends Application {
 			public void run() {
 				while(true){
 					rocket.move();
+					System.out.println(rocket.toString());
 					gameScreen.render();
 					try {
 						Thread.sleep(20);
@@ -53,6 +62,29 @@ public class Main extends Application {
 		
 //		TODO keyPressHandler
 //		gameScreen.setOnKeyPressed(value);
+		
+		gameScreen.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent arg0) {
+				
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						KeyCode keyCode = arg0.getCode();
+						if(keyCode == KeyCode.UP){
+							try {
+								rocket.propel();
+							} catch (OutOfPropellantException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+						}
+					}
+				});
+				
+			}
+		});
 		
 	}
 
