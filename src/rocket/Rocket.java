@@ -31,7 +31,6 @@ public class Rocket implements IRenderable{
 		this.horizontalSpeed = 0;
 		this.width = 20;
 		this.height = 100;
-		//loadResource();
 	}
 	
 	public void propel() throws OutOfPropellantException {
@@ -55,6 +54,7 @@ public class Rocket implements IRenderable{
 	public void move() {
 		x += horizontalSpeed;
 		y += verticalSpeed;
+		
 	}
 	
 	public void detachStage() {
@@ -92,5 +92,24 @@ public class Rocket implements IRenderable{
 	
 	public int getCenterOfMassY() {
 		return y + height/2;
+	}
+	
+	public boolean inTheMiddle() {
+		if(y>=360){
+			return true;
+		}
+		return false;
+	}
+	
+	public double getVerticalSpeed(){
+		return verticalSpeed;
+	}
+	
+	public int getY(){
+		return y;
+	}
+	
+	public void setY(int y){
+		this.y=y;
 	}
 }

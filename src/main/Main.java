@@ -37,18 +37,31 @@ public class Main extends Application {
 			@Override
 			public void run() {
 				while(true){
-					rocket.move();
-					System.out.println(rocket.toString());
-					gameScreen.render();
+					if(rocket.getY()<=360&&!gameScreen.isUpMost()){
+						rocket.setY(360);
+						gameScreen.moveBackgroundImageUp(rocket.getVerticalSpeed());
+						if(gameScreen.isUpMost()){ // we need this because this vertical speed isn't constant :[
+							gameScreen.setBackgroundY(0);
+						}
+					}
+					else{
+						rocket.move();
+					}
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					Platform.runLater(new Runnable() {
+						public void run() {
+							gameScreen.render();
+						}
+					});
 				}
 			}
 		});
+		ThreadHolder.instance.getThreads().add(thread);
 		thread.start();
 		
 		
