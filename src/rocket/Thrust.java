@@ -1,4 +1,4 @@
-package logic;
+package rocket;
 
 public class Thrust {
 	

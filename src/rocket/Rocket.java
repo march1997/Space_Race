@@ -1,4 +1,4 @@
-package logic;
+package rocket;
 
 import exceptions.OutOfPropellantException;
 import graphics.IRenderable;
@@ -12,17 +12,17 @@ public class Rocket implements IRenderable{
 	private final RocketStage secondStage;
 	
 	private int x, y, width, height;
-	private int verticalSpeed, horizontalSpeed;
+	private double verticalSpeed, horizontalSpeed;
 	private int pitch;
 	private int stageCount;
 	private Image rocketImage;
 	
-	public Rocket(int x, int y, RocketStage firstStage, RocketStage secondStage){
+	public Rocket(int x, int y, RocketStage firstStage, RocketStage secondStage, Payload payload){
 		this.firstStage = firstStage;
 		this.secondStage = secondStage;
 		this.x = x;
 		this.y = y;
-		this.verticalSpeed = 0;
+		this.verticalSpeed = -4;
 		this.horizontalSpeed = 0;
 		this.width = 20;
 		this.height = 100;
@@ -47,6 +47,11 @@ public class Rocket implements IRenderable{
 		horizontalSpeed += t.getHorizontalAcceleration(getMass());
 	}
 	
+	public void move() {
+		x += horizontalSpeed;
+		y += verticalSpeed;
+	}
+	
 	public double getMass() {
 		double rocketMass;
 		if(stageCount == 2) {
@@ -58,26 +63,6 @@ public class Rocket implements IRenderable{
 			rocketMass = 0;
 		}
 		return rocketMass; 
-	}
-	
-	public int getX(){
-		return x;
-	}
-
-	public int getY(){
-		return y;
-	}
-
-	public int getWidth(){
-		return width;
-	}
-
-	public int getHeight(){
-		return height;
-	}
-
-	public int getPitch(){
-		return pitch;
 	}
 
 	@Override

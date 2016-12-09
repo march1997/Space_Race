@@ -1,4 +1,4 @@
-package logic;
+package rocket;
 
 import exceptions.OutOfPropellantException;
 
@@ -35,19 +35,4 @@ public class RocketStage {
 		return dryMass + propellant.getMass();
 	}
 	
-	
-
-	
-
-//	
-//	public boolean replenish(RocketStage stage, int amount) {
-//		mass += amount;
-//		if(mass>stage.getTankCapacity()){
-//			mass-=amount;
-//			return false;
-//		} else{
-//			return true;
-//		}
-//	}
-//	
 }

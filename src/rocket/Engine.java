@@ -1,4 +1,4 @@
-package logic;
+package rocket;
 
 import exceptions.OutOfPropellantException;
 
@@ -13,11 +13,8 @@ public class Engine {
 	}
 	
 	public double combust(Propellant p) throws OutOfPropellantException {
-		if(p.consume(propellantComsumptionRate * 1)) {
-			return thrustOutputRate * 1;
-		} else {
-			throw new OutOfPropellantException();
-		}
+		p.consume(propellantComsumptionRate * 1);
+		return thrustOutputRate * 1;
 	}
 
 }
