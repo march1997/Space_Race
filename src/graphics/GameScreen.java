@@ -11,11 +11,12 @@ public class GameScreen extends StackPane{
 	
 	private static final int WIDTH = 480;
 	private static final int HEIGHT = 720;
+	private static final int downMostY = (int) (Resources.backgroundImage.getHeight()-HEIGHT);
 	
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private WritableImage croppedImage;
-	private int backgroundY=(int) (Resources.backgroundImage.getHeight()-HEIGHT); //use to move background image = backgroundheight-gamescreenheight
+	private int backgroundY = downMostY; //use to move background image = backgroundheight-gamescreenheight
 	
 	public GameScreen() {
 		super();
@@ -35,12 +36,12 @@ public class GameScreen extends StackPane{
 		}
 	}
 
-	public void moveBackgroundImageUp(double d){
-		if(backgroundY<=0){
-			backgroundY=0;
+	public void moveBackgroundImage(double d){
+		if(backgroundY <= 0){
+			backgroundY = 0;
 		}
 		else{
-			backgroundY+=d;
+			backgroundY += d;
 		}
 	}
 	
@@ -53,7 +54,7 @@ public class GameScreen extends StackPane{
 	}
 	
 	public boolean isUpMost(){
-		if(backgroundY<=0){
+		if(backgroundY <= 0){
 			return true;
 		}
 		return false;
@@ -61,5 +62,16 @@ public class GameScreen extends StackPane{
 	
 	public GraphicsContext getGraphicsContext() {
 		return gc;
+	}
+	
+	public boolean isDownMost(){
+		if(backgroundY >= (int) (Resources.backgroundImage.getHeight()-HEIGHT)){
+			return true;
+		}
+		return false;
+	}
+	
+	public int getDownMostY(){
+		return downMostY;
 	}
 }

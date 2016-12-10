@@ -157,4 +157,8 @@ public class Rocket implements IRenderable{
 	public void setX(int x){
 		this.x=x;
 	}
+	
+	public void setVerticalSpeed(int verticalSpeed){
+		this.verticalSpeed = verticalSpeed;
+	}
 }

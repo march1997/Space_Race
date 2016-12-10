@@ -1,11 +1,13 @@
 package main;
 
 import exceptions.*;
+
 import graphics.*;
 import rocket.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -15,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import obstacle.Fivecoin;
+import obstacle.Onecoin;
 
 public class Main extends Application {
 	
@@ -26,9 +30,13 @@ public class Main extends Application {
 	private GameScreen gameScreen;
 	private Scene scene;
 	
+	private int score = 0;
+	
 	private boolean gameStart;
 
 	private long lastNanoTime;
+	
+	private boolean isGoingUp = false;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -43,6 +51,7 @@ public class Main extends Application {
 		initResources();
 		initListener();
 		initRocket();
+		initCoin();
 		
 		lastNanoTime = System.nanoTime();
 		
@@ -77,8 +86,8 @@ public class Main extends Application {
 		
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost()){
 			rocket.setY(260);
-			rocket.setX((int)(rocket.getX()+rocket.getHorizontalSpeed()));
-			gameScreen.moveBackgroundImageUp(rocket.getVerticalSpeed());
+			rocket.setX((int)(rocket.getX() + rocket.getHorizontalSpeed()));
+			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
 			if(gameScreen.isUpMost()){ // we need this because this vertical speed isn't constant :[
 				gameScreen.setBackgroundY(0);
 			}
@@ -96,6 +105,7 @@ public class Main extends Application {
 		if(gameStart){
 			if(keysPressed.contains(KeyCode.UP)) {
 				try {
+					isGoingUp = true;
 					rocket.propel();
 				} catch (OutOfPropellantException e) {
 					// TODO Auto-generated catch block
@@ -103,8 +113,10 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
+			else{
+				isGoingUp = false;
+			}
 		}
-		
 	}
 	
 	private void initRocket() {
@@ -182,5 +194,33 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	private void initCoin(){ // A thread for creating obstacle 
+		Thread coinThread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true){
+					Random rand = new Random();
+					int random = rand.nextInt(10) + 1; //random number min 1 max 10
+					System.out.println(random);
+					try {
+						Thread.sleep(5000);
+						if(random <= 7){ // probability to create onecoin is 70%
+							IRenderableHolder.getInstance().getEntities().add(new Onecoin(50, 400));
+						} /*need to change how to create a coin*/
+						else{ // propability to create fivecoin is 30%
+							IRenderableHolder.getInstance().getEntities().add(new Fivecoin(50, 200));
+						}
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		coinThread.start();
+		threads.add(coinThread);
 	}
 }

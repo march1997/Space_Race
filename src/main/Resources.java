@@ -8,6 +8,8 @@ public class Resources {
 	public static Image rocketImage;
 	public static Image enginefire;
 	public static Image backgroundImage;
+	public static Image oneCoin;
+	public static Image fiveCoin;
 	public static AudioClip soundtrack;
 	public static AudioClip ldgoforlaunch;
 	public static AudioClip countdown;
@@ -28,6 +30,8 @@ public class Resources {
 		rocketImage = new Image(ClassLoader.getSystemResource("img/rocket/full.png").toString());
 		enginefire = new Image(ClassLoader.getSystemResource("img/rocket/enginefire1.gif").toString());
 		backgroundImage = new Image(ClassLoader.getSystemResource("img/background.jpg").toString());
+		oneCoin = new Image(ClassLoader.getSystemResource("img/onecoin.png").toString());
+		fiveCoin = new Image(ClassLoader.getSystemResource("img/fivecoin.png").toString());
 
 		soundtrack = new AudioClip(ClassLoader.getSystemResource("audio/unity.mp3").toString());
 		ldgoforlaunch = new AudioClip(ClassLoader.getSystemResource("audio/ldgoforlaunch.mp3").toString());
