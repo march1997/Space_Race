@@ -53,7 +53,6 @@ public class Main extends Application {
 				
 				double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
 				lastNanoTime = currentNanoTime;
-				System.out.println(elapsedTime);
 				
 				processInput();
 				updateGame();
@@ -74,8 +73,11 @@ public class Main extends Application {
 
 	protected void updateGame() {
 		
-		if(rocket.getY()<=260&&!gameScreen.isUpMost()){
+		rocket.accelerate();
+		
+		if(rocket.getY() <= 260 && !gameScreen.isUpMost()){
 			rocket.setY(260);
+			rocket.setX((int)(rocket.getX()+rocket.getHorizontalSpeed()));
 			gameScreen.moveBackgroundImageUp(rocket.getVerticalSpeed());
 			if(gameScreen.isUpMost()){ // we need this because this vertical speed isn't constant :[
 				gameScreen.setBackgroundY(0);
@@ -100,7 +102,6 @@ public class Main extends Application {
 					// use run later to display "out of propellant" text on screen
 					e.printStackTrace();
 				}
-				System.out.println("propel");
 			}
 		}
 		
@@ -111,9 +112,9 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-						 new RocketStage(50,	new Engine(5, 500),	new Propellant(20000)), 
+						 new RocketStage(50,	new Engine(5, 5000),	new Propellant(20000)), 
 						 new RocketStage(20,	new Engine(2, 2),	new Propellant(4)), 
-						 new Payload(2));
+						 new Payload(50000));
 		
 		rocket = falcon9;
 
@@ -126,7 +127,7 @@ public class Main extends Application {
 					Thread.sleep(100); //wait for application start
 					Resources.soundtrack.play(0.05);
 					Resources.ldgoforlaunch.play();
-//					gameStart = true;
+					gameStart = true;
 					Thread.sleep(6000); //wait for go for launch before playing countdown
 					Resources.countdown.play();
 					Thread.sleep(10000); //wait for countdown before accepting input

@@ -8,7 +8,6 @@ public class Thrust {
 	public Thrust(double force, double angle) {
 		this.force = force;
 		this.angle = angle;
-//		System.out.println("thrust out");
 	}
 	
 	public double getVerticalAcceleration(double mass) {
@@ -19,6 +18,14 @@ public class Thrust {
 	public double getHorizontalAcceleration(double mass) {
 		double acceleration = force * Math.sin(angle) / mass;
 		return acceleration;
+	}
+	
+	public double getForce() {
+		return force;
+	}
+	
+	public double getAngle() {
+		return angle;
 	}
 	
 }

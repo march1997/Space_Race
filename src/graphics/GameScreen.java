@@ -28,7 +28,7 @@ public class GameScreen extends StackPane{
 	
 	public void render() {
 		gc.clearRect(0, 0, WIDTH, HEIGHT);
-		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, 480, 720 ); // a moving background
+		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, WIDTH, HEIGHT); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
 		for(IRenderable r:IRenderableHolder.getInstance().getEntities()) {
 			r.render(gc);
