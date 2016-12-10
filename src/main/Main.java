@@ -37,6 +37,23 @@ public class Main extends Application {
 		
 		RenderableHolder.getInstance().getEntities().add(rocket);
 		
+		Thread audioThread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				DrawingUtility.soundtrack.play(0.05);
+				DrawingUtility.ldgoforlaunch.play();
+				try {
+					Thread.sleep(6000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				DrawingUtility.countdown.play();
+			}
+		});
+		ThreadHolder.getInstance().getThreads().add(audioThread);
+		audioThread.start();
+		
 		Thread movingThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -88,6 +105,7 @@ public class Main extends Application {
 						if(keyCode == KeyCode.UP){
 							try {
 								rocket.propel();
+//								DrawingUtility.enginecombustion.play();
 								System.out.println("propelled");
 							} catch (OutOfPropellantException e) {
 								e.printStackTrace();
