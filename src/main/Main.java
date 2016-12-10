@@ -118,8 +118,6 @@ public class Main extends Application {
 		listener.start();
 		ThreadHolder.getInstance().getThreads().add(listener);
 		
-
-		
 	}
 
 	public static void main(String[] args) {
