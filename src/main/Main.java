@@ -126,7 +126,7 @@ public class Main extends Application {
 					Thread.sleep(100); //wait for application start
 					Resources.soundtrack.play(0.05);
 					Resources.ldgoforlaunch.play();
-					gameStart = true;
+//					gameStart = true;
 					Thread.sleep(6000); //wait for go for launch before playing countdown
 					Resources.countdown.play();
 					Thread.sleep(10000); //wait for countdown before accepting input
@@ -161,6 +161,9 @@ public class Main extends Application {
 			public void handle(KeyEvent arg0) {
 				KeyCode keyCode = arg0.getCode();
 				keysPressed.remove(keyCode);
+				if(keyCode == KeyCode.UP) {
+					rocket.stopEngine();
+				}
 			}
 		});
 		

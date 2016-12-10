@@ -16,6 +16,7 @@ public class Rocket implements IRenderable{
 	private double pitch;
 	private int stageCount;
 	private boolean isPropelling;
+	private boolean engineSoundPlayed;
 	
 	private double verticalForce, horizontalForce;
 	
@@ -32,6 +33,7 @@ public class Rocket implements IRenderable{
 		this.width = 20;
 		this.height = 100;
 		this.isPropelling = false;
+		this.engineSoundPlayed = false;
 	}
 	
 	public void propel() throws OutOfPropellantException {
@@ -75,15 +77,22 @@ public class Rocket implements IRenderable{
 		}
 		return rocketMass; 
 	}
+	
+	public void stopEngine() {
+		Resources.enginecombustion.stop();
+		engineSoundPlayed = false;
+	}
 
 	@Override
 	public void render(GraphicsContext gc) {
-		/*gc.setFill(Color.RED);
-		gc.fillRect(x, y, width, height);*/
 		gc.drawImage(Resources.rocketImage, x, y);
 		if(isPropelling){
 			gc.drawImage(Resources.enginefire, x, y+210);
-//			Resources.enginecombustion.play();
+			if(!Resources.enginecombustion.isPlaying() && !engineSoundPlayed) {
+				Resources.enginecombustion.play();
+				engineSoundPlayed = true;
+			}
+			isPropelling = false;
 		}
 	}
 	
