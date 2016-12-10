@@ -20,7 +20,7 @@ public class DrawingUtility {// for loading every picture
 	public static void loadResource(){ //Load pictures at 1 time
 //		ClassLoader loader = ClassLoader.getSystemClassLoader();
 		rocketImage = new Image(ClassLoader.getSystemResource("img/rocketmake3.png").toString());
-		backgroundImage = new Image(ClassLoader.getSystemResource("img/sky.png").toString());
+		backgroundImage = new Image(ClassLoader.getSystemResource("img/background.jpg").toString());
 
 		soundtrack = new AudioClip(ClassLoader.getSystemResource("audio/unity.mp3").toString());
 		ldgoforlaunch = new AudioClip(ClassLoader.getSystemResource("audio/ldgoforlaunch.mp3").toString());
