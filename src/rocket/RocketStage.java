@@ -8,7 +8,6 @@ public class RocketStage {
 	
 	private Engine engine;
 	private Propellant propellant;
-	private int tankCapacity;
 	private int gimbalAngle;
 	private int gimbalAngleRange;
 	
@@ -17,7 +16,6 @@ public class RocketStage {
 		this.dryMass = dryMass;
 		this.engine = engine;
 		this.propellant = propellant;
-		this.tankCapacity = tankCapacity;
 	}
 	
 	public Thrust propel() throws OutOfPropellantException {

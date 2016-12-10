@@ -30,10 +30,14 @@ public class Main extends Application {
 		gameScreen.requestFocus();
 		addListener(gameScreen);
 		
-		rocket = new Rocket(220, 500, new RocketStage(5, new Engine(5, 50), new Propellant(200), 20), new RocketStage(2, new Engine(2, 2), new Propellant(4), 4), new Payload(2));
+		rocket = new Rocket(180, 500, 
+				 new RocketStage(5, new Engine(5, 500), new Propellant(2000), 20), 
+				 new RocketStage(2, new Engine(2, 2), new Propellant(4), 4), 
+				 new Payload(2));
+		
 		RenderableHolder.getInstance().getEntities().add(rocket);
 		
-		Thread thread = new Thread(new Runnable() {
+		Thread movingThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while(true){
@@ -47,10 +51,10 @@ public class Main extends Application {
 					else{
 						rocket.move();
 					}
+//					System.out.println(rocket.toString());
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					Platform.runLater(new Runnable() {
@@ -60,9 +64,9 @@ public class Main extends Application {
 					});
 				}
 			}
-		});
-		ThreadHolder.instance.getThreads().add(thread);
-		thread.start();
+		}, "movingThread");
+		ThreadHolder.getInstance().getThreads().add(movingThread);
+		movingThread.start();
 		
 		
 	}
@@ -73,31 +77,30 @@ public class Main extends Application {
 
 	private void addListener(GameScreen gameScreen) {
 		
-//		TODO keyPressHandler
-//		gameScreen.setOnKeyPressed(value);
-		
-		gameScreen.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		Thread listener = new Thread(new Runnable() {
+			
 			@Override
-			public void handle(KeyEvent arg0) {
-				
-				Platform.runLater(new Runnable() {
+			public void run() {
+				gameScreen.setOnKeyPressed(new EventHandler<KeyEvent>() {
 					@Override
-					public void run() {
+					public void handle(KeyEvent arg0) {
 						KeyCode keyCode = arg0.getCode();
 						if(keyCode == KeyCode.UP){
 							try {
 								rocket.propel();
+								System.out.println("propelled");
 							} catch (OutOfPropellantException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
 						}
 					}
 				});
-				
 			}
-		});
+		}, "listener");
+		listener.start();
+		ThreadHolder.getInstance().getThreads().add(listener);
+		
+
 		
 	}
 

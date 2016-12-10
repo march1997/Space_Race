@@ -2,10 +2,8 @@ package graphics;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 
 public class GameScreen extends StackPane{
 	
@@ -46,7 +44,7 @@ public class GameScreen extends StackPane{
 		}
 		else{
 			backgroundY+=d;
-			System.out.println(backgroundY);
+//			System.out.println(backgroundY);
 		}
 	}
 	

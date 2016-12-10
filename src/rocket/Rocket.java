@@ -4,9 +4,6 @@ import exceptions.OutOfPropellantException;
 import graphics.DrawingUtility;
 import graphics.IRenderable;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.media.AudioClip;
-import javafx.scene.paint.Color;
 
 public class Rocket implements IRenderable{
 	
@@ -18,7 +15,9 @@ public class Rocket implements IRenderable{
 	private double verticalSpeed, horizontalSpeed;
 	private double pitch;
 	private int stageCount;
-	//private Image rocketImage;
+	
+	private double verticalForce, horizontalForce;
+	
 	
 	public Rocket(int x, int y, RocketStage firstStage, RocketStage secondStage, Payload payload){
 		this.firstStage = firstStage;
@@ -42,23 +41,24 @@ public class Rocket implements IRenderable{
 		} else {
 			thrust = new Thrust(0, 0);
 		}
-		accelerate(thrust);
-	}
-	
-	public void accelerate(Thrust t) {
-		verticalSpeed -= t.getVerticalAcceleration(getMass());
-		horizontalSpeed += t.getHorizontalAcceleration(getMass());
-		//TODO no gravity yet
+		verticalSpeed -= thrust.getVerticalAcceleration(getMass());
+		horizontalSpeed += thrust.getHorizontalAcceleration(getMass());
 	}
 	
 	public void move() {
 		x += horizontalSpeed;
 		y += verticalSpeed;
+	}
+	
+	
+	public void update() {
 		
 	}
 	
+	
 	public void detachStage() {
 		stageCount -= 1;
+		//adjust width height
 	}
 	
 	public double getMass() {
@@ -82,7 +82,7 @@ public class Rocket implements IRenderable{
 	
 	@Override
 	public String toString() {
-		return "(x:" + x + ", y:" + y + ", hs:" + (int)horizontalSpeed + ", vs:" + (int)verticalSpeed + ", p:" + (int)pitch + ")";
+		return "(x:" + x + ", y:" + y + ", hs:" + (int)horizontalSpeed + ", vs:" + verticalSpeed + ", p:" + (int)pitch + ")";
 		
 	}
 	
