@@ -62,4 +62,8 @@ public class GameScreen extends StackPane{
 		}
 		return false;
 	}
+	
+	public GraphicsContext getGraphicsContext() {
+		return gc;
+	}
 }

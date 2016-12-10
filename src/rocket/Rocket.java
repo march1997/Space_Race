@@ -15,6 +15,7 @@ public class Rocket implements IRenderable{
 	private double verticalSpeed, horizontalSpeed;
 	private double pitch;
 	private int stageCount;
+	private boolean isPropelling;
 	
 	private double verticalForce, horizontalForce;
 	
@@ -30,9 +31,11 @@ public class Rocket implements IRenderable{
 		this.horizontalSpeed = 0;
 		this.width = 20;
 		this.height = 100;
+		this.isPropelling = false;
 	}
 	
 	public void propel() throws OutOfPropellantException {
+		isPropelling = true;
 		Thrust thrust;
 		if(stageCount == 2) {
 			thrust = firstStage.propel();
@@ -78,6 +81,10 @@ public class Rocket implements IRenderable{
 		/*gc.setFill(Color.RED);
 		gc.fillRect(x, y, width, height);*/
 		gc.drawImage(DrawingUtility.rocketImage, x, y);
+		if(isPropelling){
+			gc.drawImage(DrawingUtility.enginefire, x, y+210);
+//			DrawingUtility.enginecombustion.play();
+		}
 	}
 	
 	@Override
@@ -111,5 +118,9 @@ public class Rocket implements IRenderable{
 	
 	public void setY(int y){
 		this.y=y;
+	}
+
+	public double getX() {
+		return x;
 	}
 }

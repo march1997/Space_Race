@@ -30,7 +30,7 @@ public class Main extends Application {
 		gameScreen.requestFocus();
 		addListener(gameScreen);
 		
-		rocket = new Rocket(180, 500, 
+		rocket = new Rocket(220, 395, 
 				 new RocketStage(5, new Engine(5, 500), new Propellant(2000), 20), 
 				 new RocketStage(2, new Engine(2, 2), new Propellant(4), 4), 
 				 new Payload(2));
@@ -58,8 +58,8 @@ public class Main extends Application {
 			@Override
 			public void run() {
 				while(true){
-					if(rocket.getY()<=360&&!gameScreen.isUpMost()){
-						rocket.setY(360);
+					if(rocket.getY()<=260&&!gameScreen.isUpMost()){
+						rocket.setY(260);
 						gameScreen.moveBackgroundImageUp(rocket.getVerticalSpeed());
 						if(gameScreen.isUpMost()){ // we need this because this vertical speed isn't constant :[
 							gameScreen.setBackgroundY(0);
@@ -68,7 +68,7 @@ public class Main extends Application {
 					else{
 						rocket.move();
 					}
-//					System.out.println(rocket.toString());
+					System.out.println(rocket.toString());
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e) {
@@ -105,7 +105,6 @@ public class Main extends Application {
 						if(keyCode == KeyCode.UP){
 							try {
 								rocket.propel();
-//								DrawingUtility.enginecombustion.play();
 								System.out.println("propelled");
 							} catch (OutOfPropellantException e) {
 								e.printStackTrace();
