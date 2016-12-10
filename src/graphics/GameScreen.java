@@ -14,7 +14,7 @@ public class GameScreen extends StackPane{
 	private GraphicsContext gc;
 	//private Image backgroundImage;
 	private WritableImage croppedImage;
-	private int backgroundY=630; //use to move background image
+	private int backgroundY=(int) (DrawingUtility.backgroundImage.getHeight()-HEIGHT); //use to move background image = backgroundheight-gamescreenheight
 	
 	public GameScreen() {
 		super();
