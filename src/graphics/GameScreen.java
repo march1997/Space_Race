@@ -1,5 +1,7 @@
 package graphics;
 
+import main.Resources;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
@@ -12,9 +14,8 @@ public class GameScreen extends StackPane{
 	
 	private Canvas canvas;
 	private GraphicsContext gc;
-	//private Image backgroundImage;
 	private WritableImage croppedImage;
-	private int backgroundY=(int) (DrawingUtility.backgroundImage.getHeight()-HEIGHT); //use to move background image = backgroundheight-gamescreenheight
+	private int backgroundY=(int) (Resources.backgroundImage.getHeight()-HEIGHT); //use to move background image = backgroundheight-gamescreenheight
 	
 	public GameScreen() {
 		super();
@@ -26,16 +27,12 @@ public class GameScreen extends StackPane{
 	}
 	
 	public void render() {
-		//gc.setFill(Color.SKYBLUE);
-		//gc.fillRect(0, 0, WIDTH, HEIGHT);
 		gc.clearRect(0, 0, WIDTH, HEIGHT);
-		croppedImage = new WritableImage(DrawingUtility.backgroundImage.getPixelReader(), 0, backgroundY, 480, 720 ); // a moving background
+		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, 480, 720 ); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
-		for(IRenderable r:RenderableHolder.getInstance().getEntities()) {
+		for(IRenderable r:IRenderableHolder.getInstance().getEntities()) {
 			r.render(gc);
-//			System.out.println("Rendered object: " + r);
 		}
-//		System.out.println("---------");
 	}
 
 	public void moveBackgroundImageUp(double d){
@@ -44,7 +41,6 @@ public class GameScreen extends StackPane{
 		}
 		else{
 			backgroundY+=d;
-//			System.out.println(backgroundY);
 		}
 	}
 	

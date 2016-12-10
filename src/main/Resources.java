@@ -1,9 +1,10 @@
-package graphics;
+package main;
 
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 
-public class DrawingUtility {// for loading every picture
+public class Resources {
+	// for loading resources
 	public static Image rocketImage;
 	public static Image enginefire;
 	public static Image backgroundImage;
@@ -22,8 +23,8 @@ public class DrawingUtility {// for loading every picture
 		}
 	}
 	
-	public static void loadResource(){ //Load pictures at 1 time
-//		ClassLoader loader = ClassLoader.getSystemClassLoader();
+	public static void loadResource(){
+		//load all the resources once
 		rocketImage = new Image(ClassLoader.getSystemResource("img/rocket/full.png").toString());
 		enginefire = new Image(ClassLoader.getSystemResource("img/rocket/enginefire1.gif").toString());
 		backgroundImage = new Image(ClassLoader.getSystemResource("img/background.jpg").toString());

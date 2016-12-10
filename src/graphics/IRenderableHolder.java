@@ -3,18 +3,17 @@ package graphics;
 import java.util.List;
 import java.util.ArrayList;
 
-public class RenderableHolder {
+public class IRenderableHolder {
 	
-	private static final RenderableHolder instance = new RenderableHolder();
+	private static final IRenderableHolder instance = new IRenderableHolder();
 	
 	private List<IRenderable> entities;
 	
-	public RenderableHolder() {
+	public IRenderableHolder() {
 		entities = new ArrayList<IRenderable>();
-		
 	}
 	
-	public static RenderableHolder getInstance() {
+	public static IRenderableHolder getInstance() {
 		return instance;
 	}
 	

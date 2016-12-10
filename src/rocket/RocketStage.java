@@ -12,7 +12,7 @@ public class RocketStage {
 	private int gimbalAngleRange;
 	
 	
-	public RocketStage(double dryMass, Engine engine, Propellant propellant, int tankCapacity) {
+	public RocketStage(double dryMass, Engine engine, Propellant propellant) {
 		this.dryMass = dryMass;
 		this.engine = engine;
 		this.propellant = propellant;

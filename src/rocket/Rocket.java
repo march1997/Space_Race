@@ -1,9 +1,9 @@
 package rocket;
 
 import exceptions.OutOfPropellantException;
-import graphics.DrawingUtility;
 import graphics.IRenderable;
 import javafx.scene.canvas.GraphicsContext;
+import main.Resources;
 
 public class Rocket implements IRenderable{
 	
@@ -80,10 +80,10 @@ public class Rocket implements IRenderable{
 	public void render(GraphicsContext gc) {
 		/*gc.setFill(Color.RED);
 		gc.fillRect(x, y, width, height);*/
-		gc.drawImage(DrawingUtility.rocketImage, x, y);
+		gc.drawImage(Resources.rocketImage, x, y);
 		if(isPropelling){
-			gc.drawImage(DrawingUtility.enginefire, x, y+210);
-//			DrawingUtility.enginecombustion.play();
+			gc.drawImage(Resources.enginefire, x, y+210);
+//			Resources.enginecombustion.play();
 		}
 	}
 	

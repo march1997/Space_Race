@@ -1,9 +1,13 @@
 package main;
 
-import exceptions.OutOfPropellantException;
+import exceptions.*;
 import graphics.*;
 import rocket.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -14,109 +18,162 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	
-	Rocket rocket;
+	private List<Thread> threads = new ArrayList<>();
+	private List<KeyCode> keysPressed = new ArrayList<>();
+	
+	private Rocket rocket;
+	
+	private GameScreen gameScreen;
+	private Scene scene;
+	
+	private boolean gameStart;
+
+	private long lastNanoTime;
 
 	@Override
 	public void start(Stage primaryStage) {
-		GameScreen gameScreen = new GameScreen();
-		Scene scene = new Scene(gameScreen);
-		DrawingUtility.loadResource();
+		gameScreen = new GameScreen();
+		scene = new Scene(gameScreen);
 		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Space Race");
 		primaryStage.setResizable(false);
 		primaryStage.show();
+
+		initResources();
+		initListener();
+		initRocket();
 		
-		gameScreen.requestFocus();
-		addListener(gameScreen);
+		lastNanoTime = System.nanoTime();
 		
-		rocket = new Rocket(220, 395, 
-				 new RocketStage(5, new Engine(5, 500), new Propellant(2000), 20), 
-				 new RocketStage(2, new Engine(2, 2), new Propellant(4), 4), 
-				 new Payload(2));
-		
-		RenderableHolder.getInstance().getEntities().add(rocket);
-		
-		Thread audioThread = new Thread(new Runnable() {
+		AnimationTimer timer = new AnimationTimer() {
 			
 			@Override
-			public void run() {
-				DrawingUtility.soundtrack.play(0.05);
-				DrawingUtility.ldgoforlaunch.play();
+			public void handle(long currentNanoTime) {
+				
+				double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
+				lastNanoTime = currentNanoTime;
+				System.out.println(elapsedTime);
+				
+				processInput();
+				updateGame();
+				renderGame();
+				
+			}
+		};
+		timer.start();
+		
+		
+	}
+
+	protected void renderGame() {
+		
+		gameScreen.render();
+		
+	}
+
+	protected void updateGame() {
+		
+		if(rocket.getY()<=260&&!gameScreen.isUpMost()){
+			rocket.setY(260);
+			gameScreen.moveBackgroundImageUp(rocket.getVerticalSpeed());
+			if(gameScreen.isUpMost()){ // we need this because this vertical speed isn't constant :[
+				gameScreen.setBackgroundY(0);
+			}
+		}
+		else{
+			rocket.move();
+		}
+
+		System.out.println(rocket.toString());
+		
+	}
+
+	protected void processInput() {
+		
+		if(gameStart){
+			if(keysPressed.contains(KeyCode.UP)) {
 				try {
-					Thread.sleep(6000);
-				} catch (InterruptedException e) {
+					rocket.propel();
+				} catch (OutOfPropellantException e) {
+					// TODO Auto-generated catch block
+					// use run later to display "out of propellant" text on screen
 					e.printStackTrace();
 				}
-				DrawingUtility.countdown.play();
+				System.out.println("propel");
 			}
-		});
-		ThreadHolder.getInstance().getThreads().add(audioThread);
-		audioThread.start();
-		
-		Thread movingThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while(true){
-					if(rocket.getY()<=260&&!gameScreen.isUpMost()){
-						rocket.setY(260);
-						gameScreen.moveBackgroundImageUp(rocket.getVerticalSpeed());
-						if(gameScreen.isUpMost()){ // we need this because this vertical speed isn't constant :[
-							gameScreen.setBackgroundY(0);
-						}
-					}
-					else{
-						rocket.move();
-					}
-					System.out.println(rocket.toString());
-					try {
-						Thread.sleep(20);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					Platform.runLater(new Runnable() {
-						public void run() {
-							gameScreen.render();
-						}
-					});
-				}
-			}
-		}, "movingThread");
-		ThreadHolder.getInstance().getThreads().add(movingThread);
-		movingThread.start();
-		
+		}
 		
 	}
 	
-	public void stop() {
-		System.exit(0);
-	}
-
-	private void addListener(GameScreen gameScreen) {
+	private void initRocket() {
 		
-		Thread listener = new Thread(new Runnable() {
-			
+		gameStart = false;
+		
+		Rocket falcon9 = new Rocket(220, 395,
+						 new RocketStage(50,	new Engine(5, 500),	new Propellant(20000)), 
+						 new RocketStage(20,	new Engine(2, 2),	new Propellant(4)), 
+						 new Payload(2));
+		
+		rocket = falcon9;
+
+		IRenderableHolder.getInstance().getEntities().add(falcon9);
+		
+		Thread backgroundMusic = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				gameScreen.setOnKeyPressed(new EventHandler<KeyEvent>() {
-					@Override
-					public void handle(KeyEvent arg0) {
-						KeyCode keyCode = arg0.getCode();
-						if(keyCode == KeyCode.UP){
-							try {
-								rocket.propel();
-								System.out.println("propelled");
-							} catch (OutOfPropellantException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				});
+				try {
+					Thread.sleep(100); //wait for application start
+					Resources.soundtrack.play(0.05);
+					Resources.ldgoforlaunch.play();
+					gameStart = true;
+					Thread.sleep(6000); //wait for go for launch before playing countdown
+					Resources.countdown.play();
+					Thread.sleep(10000); //wait for countdown before accepting input
+					gameStart = true;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-		}, "listener");
-		listener.start();
-		ThreadHolder.getInstance().getThreads().add(listener);
+		}, "backgroundMusic");
+		threads.add(backgroundMusic);
+		backgroundMusic.start();
 		
+	}
+
+	private void initListener() {
+		
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			
+			@Override
+			public void handle(KeyEvent arg0) {
+				KeyCode keyCode = arg0.getCode();
+				if(!keysPressed.contains(keyCode)){
+					keysPressed.add(keyCode);
+				}
+			}
+			
+		});
+		
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent arg0) {
+				KeyCode keyCode = arg0.getCode();
+				keysPressed.remove(keyCode);
+			}
+		});
+		
+	}
+
+	private void initResources() {
+		
+		Resources.loadResource();
+		
+	}
+
+	public void stop() {
+		System.exit(0);
 	}
 
 	public static void main(String[] args) {
