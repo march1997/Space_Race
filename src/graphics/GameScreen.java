@@ -1,7 +1,7 @@
 package graphics;
 
 import main.Resources;
-
+import obstacle.Coin;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
@@ -37,14 +37,27 @@ public class GameScreen extends StackPane{
 	}
 
 	public void moveBackgroundImage(double d){
-		if(backgroundY <= 0 || backgroundY + d <= 0){
+		if((backgroundY <= 0 || backgroundY + d <= 0) && d < 0){
 			backgroundY = 0;
+			System.out.println("1");
 		}
-		else if(backgroundY >= downMostY && d>=0){
+		else if(backgroundY >= downMostY && backgroundY + d >= downMostY && d >= 0 ){
 			backgroundY = downMostY;
+			System.out.println("2");
 		}
 		else{
+			System.out.println("3");
 			backgroundY += d;
+			if(backgroundY >= downMostY){
+				backgroundY = downMostY;
+			}
+		}
+		for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
+			
+			if(o instanceof Coin){
+				Coin coin = (Coin) o;
+				coin.still(d);
+			}
 		}
 	}
 	

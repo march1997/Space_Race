@@ -55,6 +55,7 @@ public abstract class Coin implements IRenderable{
 	
 	public void collect(){
 		this.visible = false;
+		score += this.score;
 	}
 	
 	public void still(double d){

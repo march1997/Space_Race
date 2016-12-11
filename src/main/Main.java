@@ -84,30 +84,23 @@ public class Main extends Application {
 		
 		rocket.accelerate();
 		
+		
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost() && rocket.getVerticalSpeed() < 0){
 			rocket.setY(260);
 			rocket.setX((int)(rocket.getX() + rocket.getHorizontalSpeed()));
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
-			for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
-				
-				if(o instanceof Coin){
-					Coin coin = (Coin) o;
-					coin.still(rocket.getVerticalSpeed());
-				}
-			}
 		}
 		else if(rocket.getVerticalSpeed() > 0 && gameScreen.isDownMost()){
-			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
 			rocket.move();
 			if(rocket.getY() >= 395){ // make rocket on the ground
 				rocket.setY(395);
 				rocket.setVerticalSpeed(0);
 			}
 		}
-		else if(rocket.getVerticalSpeed() > 0){
+		else if(rocket.getY() >= 260 && rocket.getVerticalSpeed() > 0){
 			rocket.setY(260);
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
-		}
+		}	
 		else{
 			rocket.move();
 		}
