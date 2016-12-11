@@ -1,6 +1,7 @@
 package obstacle;
 
 import graphics.IRenderable;
+import graphics.IRenderableHolder;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Coin implements IRenderable{

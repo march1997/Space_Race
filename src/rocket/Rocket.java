@@ -93,7 +93,9 @@ public class Rocket implements IRenderable{
 	public void render(GraphicsContext gc) {
 		gc.save();
 		
+		gc.translate(this.getCenterOfMassX(), this.getCenterOfMassY());
 		gc.rotate(pitch);
+		gc.translate(-this.getCenterOfMassX(), -this.getCenterOfMassY());
 		gc.drawImage(Resources.rocketImage, x, y);
 		
 		if(isPropelling){
@@ -172,5 +174,13 @@ public class Rocket implements IRenderable{
 	
 	public boolean isVisible(){
 		return true;
+	}
+	
+	public void rotateCCW(){
+		this.pitch += 1;
+	}
+	
+	public void rotateCW(){
+		this.pitch-=1;
 	}
 }

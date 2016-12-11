@@ -44,14 +44,11 @@ public class GameScreen extends StackPane{
 	public void moveBackgroundImage(double d){
 		if((backgroundY <= 0 || backgroundY + d <= 0) && d < 0){
 			backgroundY = 0;
-			System.out.println("1");
 		}
-		else if(backgroundY >= downMostY && backgroundY + d >= downMostY && d >= 0 ){
+		/*else if(backgroundY >= downMostY && backgroundY + d >= downMostY && d >= 0 ){
 			backgroundY = downMostY;
-			System.out.println("2");
-		}
+		}*/
 		else{
-			System.out.println("3");
 			backgroundY += d;
 			if(backgroundY >= downMostY){
 				backgroundY = downMostY;

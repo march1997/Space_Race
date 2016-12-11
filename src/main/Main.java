@@ -117,10 +117,15 @@ public class Main extends Application {
 				try {
 					rocket.propel();
 				} catch (OutOfPropellantException e) {
-					// TODO Auto-generated catch block
 					// use run later to display "out of propellant" text on screen
 					e.printStackTrace();
 				}
+			}
+			else if(keysPressed.contains(KeyCode.LEFT)){
+				rocket.rotateCCW();
+			}
+			else if(keysPressed.contains(KeyCode.RIGHT)){
+				rocket.rotateCW();
 			}
 		}
 	}
