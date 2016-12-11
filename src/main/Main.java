@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import obstacle.Coin;
 import obstacle.Fivecoin;
 import obstacle.Onecoin;
 
@@ -94,6 +95,12 @@ public class Main extends Application {
 		}
 		else{
 			rocket.move();
+		}
+		for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
+			if(o instanceof Coin){
+				Coin coin = (Coin) o;
+				coin.still(rocket.getVerticalSpeed());
+			}
 		}
 
 		System.out.println(rocket.toString());
@@ -196,7 +203,7 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	private void initCoin(){ // A thread for creating obstacle 
+	private void initCoin(){ // A thread for creating coin
 		Thread coinThread = new Thread(new Runnable() {
 			
 			@Override
@@ -204,17 +211,18 @@ public class Main extends Application {
 				while(true){
 					Random rand = new Random();
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
+					int randomX = rand.nextInt(480-rocket.getWidth())+1;
+					int randomY = rand.nextInt(400);
 					System.out.println(random);
 					try {
 						Thread.sleep(5000);
 						if(random <= 7){ // probability to create onecoin is 70%
-							IRenderableHolder.getInstance().getEntities().add(new Onecoin(50, 400));
+							IRenderableHolder.getInstance().getEntities().add(new Onecoin(randomX, randomY));
 						} /*need to change how to create a coin*/
 						else{ // propability to create fivecoin is 30%
-							IRenderableHolder.getInstance().getEntities().add(new Fivecoin(50, 200));
+							IRenderableHolder.getInstance().getEntities().add(new Fivecoin(randomX, randomY));
 						}
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

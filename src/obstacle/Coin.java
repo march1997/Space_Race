@@ -57,6 +57,10 @@ public abstract class Coin implements IRenderable{
 		this.visible = false;
 	}
 	
+	public void still(double d){
+		this.y -= d;
+	}
+	
 	/*public boolean isCollide(){
 		//;w;
 	}*/

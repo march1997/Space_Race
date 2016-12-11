@@ -114,6 +114,14 @@ public class Rocket implements IRenderable{
 		
 	}
 	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
+	
 	public double getMass() {
 		double rocketMass;
 		if(stageCount == 2) {
