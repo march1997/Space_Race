@@ -28,4 +28,8 @@ public class Thrust {
 		return angle;
 	}
 	
+	public void setAngle(double pitch){
+		this.angle = pitch;
+	}
+	
 }

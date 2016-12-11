@@ -57,6 +57,7 @@ public class Rocket implements IRenderable{
 		
 		longitudinalForce = thrust.getForce() * Math.cos(thrust.getAngle());
 		lateralForce = thrust.getForce() * Math.sin(thrust.getAngle());
+		thrust.setAngle(this.pitch);
 		
 	}
 	
@@ -64,6 +65,7 @@ public class Rocket implements IRenderable{
 		
 		verticalAcceleration = -1 * (longitudinalForce * Math.cos(pitch) + lateralForce * Math.sin(pitch) - (GRAVITY * getMass())) / getMass();
 		horizontalAcceleration = 	(longitudinalForce * Math.sin(pitch) + lateralForce * Math.cos(pitch)) / getMass();
+		System.out.println(this.verticalAcceleration + " " + this.horizontalAcceleration);
 		
 		verticalSpeed += verticalAcceleration;
 		horizontalSpeed += horizontalAcceleration;
@@ -81,7 +83,6 @@ public class Rocket implements IRenderable{
 	
 	public void detachStage() {
 		stageCount -= 1;
-		//TODO
 	}
 	
 	public void stopEngine() {
@@ -93,7 +94,7 @@ public class Rocket implements IRenderable{
 	public void render(GraphicsContext gc) {
 		gc.save();
 		
-		gc.translate(this.getCenterOfMassX(), this.getCenterOfMassY());
+		gc.translate(this.getCenterOfMassX(), this.getCenterOfMassY());/* translate to rotate rocket correctly */
 		gc.rotate(pitch);
 		gc.translate(-this.getCenterOfMassX(), -this.getCenterOfMassY());
 		gc.drawImage(Resources.rocketImage, x, y);
@@ -106,7 +107,6 @@ public class Rocket implements IRenderable{
 			}
 			isPropelling = false;
 		}
-
 		gc.restore();
 	}
 	
@@ -152,20 +152,24 @@ public class Rocket implements IRenderable{
 		return horizontalSpeed;
 	}
 	
-	public double getY(){
-		return y;
-	}
-	
-	public void setY(int y){
-		this.y=y;
-	}
-	
 	public double getX(){
 		return x;
 	}
 	
+	public double getY(){
+		return y;
+	}
+	
+	public double getPitch(){
+		return pitch;
+	}
+	
 	public void setX(int x){
 		this.x=x;
+	}
+	
+	public void setY(int y){
+		this.y=y;
 	}
 	
 	public void setVerticalSpeed(int verticalSpeed){
@@ -177,10 +181,10 @@ public class Rocket implements IRenderable{
 	}
 	
 	public void rotateCCW(){
-		this.pitch += 1;
+		this.pitch -= 1;
 	}
 	
 	public void rotateCW(){
-		this.pitch-=1;
+		this.pitch +=1;
 	}
 }
