@@ -6,8 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Coin implements IRenderable{
 	
 	private int score;
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private final int WIDTH = 60;
 	private final int HEIGHT = 60;
 	private boolean visible; // if it is not visible, it will be deleted
@@ -25,11 +25,11 @@ public abstract class Coin implements IRenderable{
 		return score;
 	}
 	
-	public int getX(){
+	public double getX(){
 		return x;
 	}
 	
-	public int getY(){
+	public double getY(){
 		return y;
 	}
 	

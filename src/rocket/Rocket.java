@@ -11,7 +11,7 @@ public class Rocket implements IRenderable{
 	private final RocketStage secondStage;
 	private final Payload payload;
 	
-	private int x, y, width, height;
+	private double x, y, width, height;
 	private double pitch;
 	private double verticalSpeed, horizontalSpeed, rotationalSpeed;
 	private double verticalAcceleration, horizontalAcceleration, rotationalAcceleration;
@@ -114,11 +114,11 @@ public class Rocket implements IRenderable{
 		
 	}
 	
-	public int getWidth(){
+	public double getWidth(){
 		return width;
 	}
 	
-	public int getHeight(){
+	public double getHeight(){
 		return height;
 	}
 	
@@ -134,11 +134,11 @@ public class Rocket implements IRenderable{
 		return rocketMass; 
 	}
 	
-	public int getCenterOfMassX() {
+	public double getCenterOfMassX() {
 		return x + width/2;
 	}
 	
-	public int getCenterOfMassY() {
+	public double getCenterOfMassY() {
 		return y + height/2;
 	}
 	
@@ -150,7 +150,7 @@ public class Rocket implements IRenderable{
 		return horizontalSpeed;
 	}
 	
-	public int getY(){
+	public double getY(){
 		return y;
 	}
 	
@@ -158,7 +158,7 @@ public class Rocket implements IRenderable{
 		this.y=y;
 	}
 	
-	public int getX(){
+	public double getX(){
 		return x;
 	}
 	

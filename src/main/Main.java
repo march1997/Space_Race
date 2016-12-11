@@ -37,7 +37,6 @@ public class Main extends Application {
 
 	private long lastNanoTime;
 	
-	private boolean isGoingUp = false;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -89,6 +88,12 @@ public class Main extends Application {
 			rocket.setY(260);
 			rocket.setX((int)(rocket.getX() + rocket.getHorizontalSpeed()));
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
+			for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
+				if(o instanceof Coin){
+					Coin coin = (Coin) o;
+					coin.still(rocket.getVerticalSpeed());
+				}
+			}
 			if(gameScreen.isUpMost()){ // we need this because this vertical speed isn't constant :[
 				gameScreen.setBackgroundY(0);
 			}
@@ -96,12 +101,7 @@ public class Main extends Application {
 		else{
 			rocket.move();
 		}
-		for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
-			if(o instanceof Coin){
-				Coin coin = (Coin) o;
-				coin.still(rocket.getVerticalSpeed());
-			}
-		}
+		
 
 		System.out.println(rocket.toString());
 		
@@ -112,16 +112,12 @@ public class Main extends Application {
 		if(gameStart){
 			if(keysPressed.contains(KeyCode.UP)) {
 				try {
-					isGoingUp = true;
 					rocket.propel();
 				} catch (OutOfPropellantException e) {
 					// TODO Auto-generated catch block
 					// use run later to display "out of propellant" text on screen
 					e.printStackTrace();
 				}
-			}
-			else{
-				isGoingUp = false;
 			}
 		}
 	}
@@ -211,7 +207,7 @@ public class Main extends Application {
 				while(true){
 					Random rand = new Random();
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
-					int randomX = rand.nextInt(480-rocket.getWidth())+1;
+					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
 					int randomY = rand.nextInt(400);
 					System.out.println(random);
 					try {
