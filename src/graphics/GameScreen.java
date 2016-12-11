@@ -32,12 +32,7 @@ public class GameScreen extends StackPane{
 		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, WIDTH, HEIGHT); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
 		for(IRenderable r : IRenderableHolder.getInstance().getEntities()) {
-			if(!r.isVisible()){
-				IRenderableHolder.getInstance().getEntities().remove(r);
-			}
-			else{
 				r.render(gc);
-			}
 		}
 	}
 
@@ -53,7 +48,7 @@ public class GameScreen extends StackPane{
 			for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
 				if(o instanceof Coin){
 					Coin coin = (Coin) o;
-					coin.still(d);
+					coin.still((int)d);
 				}
 			}
 			if(backgroundY >= downMostY){

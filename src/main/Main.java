@@ -84,11 +84,10 @@ public class Main extends Application {
 		
 		rocket.accelerate();
 		
-		
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost() && rocket.getVerticalSpeed() < 0){
 			rocket.move();
 			rocket.setY(260);
-			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
+			gameScreen.moveBackgroundImage((int)rocket.getVerticalSpeed());
 		}
 		else if(rocket.getVerticalSpeed() > 0 && gameScreen.isDownMost()){
 			rocket.move();
@@ -230,7 +229,6 @@ public class Main extends Application {
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
 					int randomY = rand.nextInt(400);
-					System.out.println(random);
 					try {
 						Thread.sleep(5000);
 						if(random <= 7){ // probability to create onecoin is 70%
