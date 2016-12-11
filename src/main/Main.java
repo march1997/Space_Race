@@ -86,8 +86,8 @@ public class Main extends Application {
 		
 		
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost() && rocket.getVerticalSpeed() < 0){
+			rocket.move();
 			rocket.setY(260);
-			rocket.setX((int)(rocket.getX() + rocket.getHorizontalSpeed()));
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
 		}
 		else if(rocket.getVerticalSpeed() > 0 && gameScreen.isDownMost()){
@@ -122,10 +122,14 @@ public class Main extends Application {
 				}
 			}
 			else if(keysPressed.contains(KeyCode.LEFT)){
-				rocket.rotateCCW();
+				if(rocket.getPitch()>-20) {
+					rocket.rotateCCW();
+				}
 			}
 			else if(keysPressed.contains(KeyCode.RIGHT)){
-				rocket.rotateCW();
+				if(rocket.getPitch()<20) {
+					rocket.rotateCW();
+				}
 			}
 		}
 	}
@@ -135,9 +139,9 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-						 new RocketStage(50,	new Engine(5, 5000),	new Propellant(20000)), 
+						 new RocketStage(50,	new Engine(5, 500),	new Propellant(20000)), 
 						 new RocketStage(20,	new Engine(2, 2),	new Propellant(4)), 
-						 new Payload(50000));
+						 new Payload(500));
 		
 		rocket = falcon9;
 
