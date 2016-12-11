@@ -169,4 +169,8 @@ public class Rocket implements IRenderable{
 	public void setVerticalSpeed(int verticalSpeed){
 		this.verticalSpeed = verticalSpeed;
 	}
+	
+	public boolean isVisible(){
+		return true;
+	}
 }
