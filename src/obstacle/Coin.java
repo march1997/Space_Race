@@ -3,6 +3,7 @@ package obstacle;
 import graphics.IRenderable;
 import graphics.IRenderableHolder;
 import javafx.scene.canvas.GraphicsContext;
+import rocket.Rocket;
 
 public abstract class Coin implements IRenderable{
 	
@@ -61,6 +62,13 @@ public abstract class Coin implements IRenderable{
 	
 	public void still(double d){
 		this.y -= d;
+	}
+	
+	public boolean canCollect(Rocket rocket){
+		if(this.x < rocket.getX() && this.x + this.getWidth() > rocket.getX() && this.y < rocket.getY() && this.y + this.getHeight() > rocket.getY()){
+			return true;
+		}
+		return false;
 	}
 	
 	/*public boolean isCollide(){

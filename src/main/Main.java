@@ -95,16 +95,25 @@ public class Main extends Application {
 			if(rocket.getY() >= 395){ // make rocket on the ground
 				rocket.setY(395);
 				rocket.setVerticalSpeed(0);
+				rocket.setHorizontalSpeed(0);
 			}
 		}
 		else if(rocket.getY() >= 260 && rocket.getVerticalSpeed() > 0){
 			rocket.setY(260);
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
+			rocket.move();
 		}	
 		else{
 			rocket.move();
 		}
-		
+		for(IRenderable r : IRenderableHolder.getInstance().getEntities()){
+			if(r instanceof Coin){
+				Coin coin = (Coin) r;
+				if(coin.canCollect(rocket)){
+					coin.collect();
+				}
+			}
+		}
 
 		System.out.println(rocket.toString());
 		

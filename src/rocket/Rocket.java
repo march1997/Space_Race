@@ -191,4 +191,8 @@ public class Rocket implements IRenderable{
 	public void rotateCW(){
 		this.pitch +=1;
 	}
+	
+	public void setHorizontalSpeed(double horizontalSpeed){
+		this.horizontalSpeed = horizontalSpeed;
+	}
 }

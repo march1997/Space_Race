@@ -50,14 +50,14 @@ public class GameScreen extends StackPane{
 		}*/
 		else{
 			backgroundY += d;
+			for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
+				if(o instanceof Coin){
+					Coin coin = (Coin) o;
+					coin.still(d);
+				}
+			}
 			if(backgroundY >= downMostY){
 				backgroundY = downMostY;
-			}
-		}
-		for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
-			if(o instanceof Coin){
-				Coin coin = (Coin) o;
-				coin.still(d);
 			}
 		}
 	}
