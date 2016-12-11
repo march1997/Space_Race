@@ -55,23 +55,27 @@ public class Rocket implements IRenderable{
 			thrust = new Thrust(0, 0);
 		}
 		
-		longitudinalForce = thrust.getForce() * Math.cos(thrust.getAngle());
-		lateralForce = thrust.getForce() * Math.sin(thrust.getAngle());
 		thrust.setAngle(this.pitch);
-		
+		/*longitudinalForce = -1*thrust.getForce() * Math.sin(Math.toRadians(thrust.getAngle()+90));
+		lateralForce = thrust.getForce() * Math.cos(Math.toRadians(thrust.getAngle()-90));*/
+		longitudinalForce = -1*Math.sin(Math.toRadians(thrust.getAngle()+90));
+		lateralForce = Math.cos(Math.toRadians(thrust.getAngle()-90));
 	}
 	
 	public void accelerate() {
 		
-		verticalAcceleration = -1 * (longitudinalForce * Math.cos(pitch) + lateralForce * Math.sin(pitch) - (GRAVITY * getMass())) / getMass();
-		horizontalAcceleration = 	(longitudinalForce * Math.sin(pitch) + lateralForce * Math.cos(pitch)) / getMass();
-		System.out.println(this.verticalAcceleration + " " + this.horizontalAcceleration);
+		/*verticalAcceleration = -1 * (longitudinalForce * Math.cos(pitch) + lateralForce * Math.sin(pitch) - (GRAVITY * getMass())) / getMass();
+		horizontalAcceleration = 	(longitudinalForce * Math.sin(pitch) + lateralForce * Math.cos(pitch)) / getMass();*/
+		verticalAcceleration = longitudinalForce/20 - GRAVITY;
+		horizontalAcceleration = lateralForce/20;
+		System.out.println(this.verticalAcceleration + " " + this.horizontalAcceleration + " " + pitch);
 		
 		verticalSpeed += verticalAcceleration;
 		horizontalSpeed += horizontalAcceleration;
 		
 		longitudinalForce = 0;
 		lateralForce = 0;
+		System.out.println(verticalAcceleration + " " + horizontalAcceleration);
 		
 	}
 	
@@ -94,7 +98,7 @@ public class Rocket implements IRenderable{
 	public void render(GraphicsContext gc) {
 		gc.save();
 		
-		gc.translate(this.getCenterOfMassX(), this.getCenterOfMassY());/* translate to rotate rocket correctly */
+		gc.translate(this.getCenterOfMassX(), this.getCenterOfMassY()); /* translate to rotate rocket correctly */
 		gc.rotate(pitch);
 		gc.translate(-this.getCenterOfMassX(), -this.getCenterOfMassY());
 		gc.drawImage(Resources.rocketImage, x, y);
