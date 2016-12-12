@@ -16,6 +16,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import obstacle.Coin;
 import obstacle.Fivecoin;
@@ -130,8 +132,12 @@ public class Main extends Application {
 				try {
 					rocket.propel();
 				} catch (OutOfPropellantException e) {
-					// use run later to display "out of propellant" text on screen
-					new OutOfPropellantException();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							gameScreen.fuel = "OUT OF FUEL";
+						}
+					});
 				}
 			}
 			if(keysPressed.contains(KeyCode.LEFT)){
@@ -153,8 +159,8 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-						 new RocketStage(50,	new Engine(5, 500),	new Propellant(20000)), 
-						 new RocketStage(20,	new Engine(2, 2),	new Propellant(4)), 
+						 new RocketStage(500,	new Engine(5, 50),	new Propellant(200)), 
+						 new RocketStage(200,	new Engine(2, 2),	new Propellant(4)), 
 						 new Payload(500));
 		
 		rocket = falcon9;

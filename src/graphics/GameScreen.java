@@ -46,8 +46,8 @@ public class GameScreen extends StackPane{
 				IRenderableHolder.getInstance().getEntities().get(i).render(gc);
 			}
 		}
-		gc.setFill(Color.GREEN);
-		gc.setFont(Font.font("Arial", 25));
+		gc.setFill(Color.WHITE);
+		gc.setFont(Font.font("Consolas", 25));
 		gc.fillText("Score : " + Main.score, 300, 30, 170);
 		gc.fillText("Fuel : " + fuel, 10, 30);
 	}
