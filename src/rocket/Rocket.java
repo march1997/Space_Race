@@ -25,6 +25,8 @@ public class Rocket implements IRenderable{
 	
 	private double longitudinalForce, lateralForce;
 	
+	private Thrust thrust;
+	
 	public Rocket(int x, int y, RocketStage firstStage, RocketStage secondStage, Payload payload){
 		this.firstStage = firstStage;
 		this.secondStage = secondStage;
@@ -46,7 +48,6 @@ public class Rocket implements IRenderable{
 	
 	public void propel() throws OutOfPropellantException {
 		isPropelling = true;
-		Thrust thrust;
 		if(stageCount == 2) {
 			thrust = firstStage.propel();
 		} else if(stageCount == 1) {

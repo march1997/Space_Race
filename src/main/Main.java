@@ -75,7 +75,7 @@ public class Main extends Application {
 
 	protected void renderGame() {
 		
-		gameScreen.render();
+		gameScreen.render(rocket);
 		
 	}
 
@@ -126,7 +126,7 @@ public class Main extends Application {
 					rocket.propel();
 				} catch (OutOfPropellantException e) {
 					// use run later to display "out of propellant" text on screen
-					e.printStackTrace();
+					new OutOfPropellantException();
 				}
 			}
 			else if(keysPressed.contains(KeyCode.LEFT)){

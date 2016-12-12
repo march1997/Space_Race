@@ -1,14 +1,18 @@
 package rocket;
 
 import exceptions.OutOfPropellantException;
+import graphics.GameScreen;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Propellant {
 
 	private double mass;
 	private double density;
+	private double massmax;
 	
 	public Propellant(int mass) {
 		this.mass = mass;
+		this.massmax = mass;
 	}
 	
 	public double getMass() {
@@ -25,7 +29,13 @@ public class Propellant {
 			throw new OutOfPropellantException();
 		} else {
 			mass -= amount;
+			System.out.println(mass + " " + massmax);
+			GameScreen.fuel = "" + (int) (mass / massmax * 100) + " %";
 		}
+	}
+	
+	public double getMassMax(){
+		return massmax;
 	}
 	
 }

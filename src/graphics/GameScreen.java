@@ -3,6 +3,7 @@ package graphics;
 import main.Main;
 import main.Resources;
 import obstacle.Coin;
+import rocket.Rocket;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
@@ -17,9 +18,12 @@ public class GameScreen extends StackPane{
 	private static final int downMostY = (int) (Resources.backgroundImage.getHeight()-HEIGHT);
 	
 	private Canvas canvas;
-	private GraphicsContext gc;
+	//private GraphicsContext gc;
 	private WritableImage croppedImage;
 	private int backgroundY = downMostY; //use to move background image = backgroundheight-gamescreenheight
+	
+	public static GraphicsContext gc;
+	public static String fuel = "";
 	
 	public GameScreen() {
 		super();
@@ -30,7 +34,7 @@ public class GameScreen extends StackPane{
 		getChildren().add(canvas);
 	}
 	
-	public void render() {
+	public void render(Rocket rocket) {
 		gc.clearRect(0, 0, WIDTH, HEIGHT);
 		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, WIDTH, HEIGHT); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
@@ -45,6 +49,7 @@ public class GameScreen extends StackPane{
 		gc.setFill(Color.GREEN);
 		gc.setFont(Font.font("Arial", 25));
 		gc.fillText("Score : " + Main.score, 300, 30, 170);
+		gc.fillText("Fuel : " + fuel, 10, 30);
 	}
 
 	public void moveBackgroundImage(double d){
@@ -68,7 +73,7 @@ public class GameScreen extends StackPane{
 			for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
 				if(o instanceof Coin){
 					Coin coin = (Coin) o;
-					coin.still((int)d);
+					coin.still(d);
 				}
 			}
 			if(backgroundY >= downMostY){
@@ -82,7 +87,7 @@ public class GameScreen extends StackPane{
 	}
 	
 	public void setBackgroundY(int y){
-		backgroundY=y;
+		backgroundY = y;
 	}
 	
 	public boolean isUpMost(){
