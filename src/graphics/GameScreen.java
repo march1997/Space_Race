@@ -23,7 +23,7 @@ public class GameScreen extends StackPane{
 	private int backgroundY = downMostY; //use to move background image = backgroundheight-gamescreenheight
 	
 	public static GraphicsContext gc;
-	public static String fuel = "";
+	public static String fuel = "100 %";
 	
 	public GameScreen() {
 		super();

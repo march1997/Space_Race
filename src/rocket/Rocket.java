@@ -83,6 +83,12 @@ public class Rocket implements IRenderable{
 	public void move() {
 		x += horizontalSpeed;
 		y += verticalSpeed;
+		if(x>480){
+			x-=480;
+		}
+		else if(x<0){
+			x+=480;
+		}
 	}
 	
 	
