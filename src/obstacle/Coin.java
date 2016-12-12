@@ -71,8 +71,4 @@ public abstract class Coin implements IRenderable{
 		}
 		return false;
 	}
-	
-	/*public boolean isCollide(){
-		//;w;
-	}*/
 }

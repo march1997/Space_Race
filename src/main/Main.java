@@ -60,6 +60,7 @@ public class Main extends Application {
 		initListener();
 		initRocket();
 		initCoin();
+		initPlane();
 		
 		lastNanoTime = System.nanoTime();
 		
@@ -250,21 +251,43 @@ public class Main extends Application {
 		launch(args);
 	}
 	
+	private void initPlane(){
+		Thread planeThread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				int count=0;
+				int k=0;
+				while(true){
+					Random rand = new Random();
+					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
+					int randomY = k;
+					count+=1;
+					k-=200;
+					if(count <= 10){
+						IRenderableHolder.getInstance().getEntities().add(new Plane(randomX, randomY, 1));
+					}
+				}
+			}
+		});
+		planeThread.start();
+	}
+	
 	private void initCoin(){ // A thread for creating coin
 		Thread coinThread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				int k=0;
-				int nub=0;
+				int count=0;
 				while(true){
 					Random rand = new Random();
 					k-=200;
 					System.out.println(k);
-					if(nub>50){
+					if(count>50){
 						break;
 					}
-					nub+=1;
+					count+=1;
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
 					//int randomY = rand.nextInt(400);

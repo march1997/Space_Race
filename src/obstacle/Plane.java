@@ -46,4 +46,7 @@ public class Plane implements IRenderable{
 		rocket.explosion();
 	}
 
+	public void still(double move){
+		this.y -= move;
+	}
 }

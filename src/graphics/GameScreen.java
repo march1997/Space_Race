@@ -3,6 +3,7 @@ package graphics;
 import main.Main;
 import main.Resources;
 import obstacle.Coin;
+import obstacle.Plane;
 import rocket.Rocket;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,6 +22,7 @@ public class GameScreen extends StackPane{
 	//private GraphicsContext gc;
 	private WritableImage croppedImage;
 	private int backgroundY = downMostY; //use to move background image = backgroundheight-gamescreenheight
+	private int explosioncount = 0;
 	
 	public static GraphicsContext gc;
 	public static String fuel = "100 %";
@@ -38,7 +40,14 @@ public class GameScreen extends StackPane{
 		gc.clearRect(0, 0, WIDTH, HEIGHT);
 		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, WIDTH, HEIGHT); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
-		gc.drawImage(Resources.explosionImage, rocket.getCenterOfMassX(), rocket.getCenterOfMassY());
+		if(!rocket.isVisible()){
+			explosioncount += 1;
+			rocket.setHorizontalSpeed(0);
+			rocket.setVerticalSpeed(0);
+		}
+		if(!rocket.isVisible() && explosioncount <= 65){
+			gc.drawImage(Resources.explosionImage, rocket.getCenterOfMassX(), rocket.getCenterOfMassY());
+		}
 		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0  ; i--) {
 			if(!IRenderableHolder.getInstance().getEntities().get(i).isVisible()){
 				System.out.println("Remove");
@@ -74,6 +83,10 @@ public class GameScreen extends StackPane{
 				if(o instanceof Coin){
 					Coin coin = (Coin) o;
 					coin.still(d);
+				}
+				else if(o instanceof Plane){
+					Plane plane = (Plane) o;
+					plane.still(d);
 				}
 			}
 			if(backgroundY >= downMostY){

@@ -80,7 +80,6 @@ public class Rocket implements IRenderable{
 		longitudinalForce = 0;
 		lateralForce = 0;
 //		System.out.println(verticalAcceleration + " " + horizontalAcceleration);
-		
 	}
 	
 	public void move() {
@@ -129,24 +128,6 @@ public class Rocket implements IRenderable{
 		return "(x:" + x + ", y:" + y + ", hs:" + horizontalSpeed + ", vs:" + verticalSpeed + ", rs:" + rotationalSpeed + ", p:" + (int)pitch + ")";
 		
 	}
-	
-	/*public void startSoundThread(GraphicsContext gc){
-		Thread backgroundRocketSound = new Thread(new Runnable() {
-			public void run() {
-				while(true){
-					if(isPropelling){
-						gc.drawImage(Resources.enginefire, x, y+210);
-						if(!Resources.enginecombustion.isPlaying() && !engineSoundPlayed) {
-							Resources.enginecombustion.play();
-							engineSoundPlayed = true;
-						}
-						isPropelling = false;
-					}
-				}
-			}
-		}, "backgroundRocketSound");
-		backgroundRocketSound.start();
-	}*/
 	
 	public double getWidth(){
 		return width;
