@@ -41,6 +41,8 @@ public class Main extends Application {
 	
 	private boolean gamePause;
 
+	private int explosiontime = 0;
+	
 	private long lastNanoTime;
 	
 
@@ -70,11 +72,11 @@ public class Main extends Application {
 				lastNanoTime = currentNanoTime;
 
 				
-				if(!gamePause && !rocket.isExplosion()) {
+				//if(!gamePause && !rocket.isExplosion()) {
 					processInput();
 					updateGame();
 					renderGame();
-				}
+				//}
 			}
 		};
 		timer.start();
@@ -89,17 +91,17 @@ public class Main extends Application {
 	}
 
 	protected void updateGame() {
-		
+
 		rocket.accelerate();
-		
+		rocket.move();
 		
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost() && rocket.getVerticalSpeed() < 0){
-			rocket.move();
+			//rocket.move();
 			rocket.setY(260);
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
 		}
 		else if(rocket.getVerticalSpeed() > 0 && gameScreen.isDownMost()){
-			rocket.move();
+			//rocket.move();
 			if(rocket.getY() >= 395){ // make rocket on the ground
 				rocket.setY(395);
 				rocket.setVerticalSpeed(0);
@@ -110,12 +112,10 @@ public class Main extends Application {
 		else if(rocket.getY() >= 260 && rocket.getVerticalSpeed() > 0){
 			rocket.setY(260);
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
-			rocket.move();
+			//rocket.move();
 		}	
-		else{
-			rocket.move();
-		}
-		for(IRenderable r : IRenderableHolder.getInstance().getEntities()){
+		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0 ; i --){
+			IRenderable r = IRenderableHolder.getInstance().getEntities().get(i);
 			if(r instanceof Coin){
 				Coin coin = (Coin) r;
 				if(coin.canCollect(rocket)){
@@ -123,6 +123,17 @@ public class Main extends Application {
 					Resources.collectcoinsound.play();
 				}
 			}
+			else if(r instanceof Plane){
+				Plane plane = (Plane) r;
+				if(plane.isCollide(rocket)){
+					System.out.println("Collide");
+					plane.collide(rocket);
+				}
+			}
+		}
+		if(!rocket.isVisible() && explosiontime == 0){
+			explosiontime += 1;
+			Resources.explosionsound.play();
 		}
 		System.out.println(rocket.toString());
 		
@@ -169,7 +180,8 @@ public class Main extends Application {
 		
 		rocket = falcon9;
 
-		IRenderableHolder.getInstance().getEntities().add(falcon9);
+		//IRenderableHolder.getInstance().getEntities().add(falcon9);
+		IRenderableHolder.getInstance().getEntities().add(rocket);
 		
 		Thread backgroundMusic = new Thread(new Runnable() {
 			@Override

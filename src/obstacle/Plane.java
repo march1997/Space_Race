@@ -20,8 +20,9 @@ public class Plane implements IRenderable{
 		this.y = y;
 		this.isvisible = true;
 		this.speed = speed;
+		this.width = 90;
+		this.height = 50;
 	}
-
 
 	@Override
 	public void render(GraphicsContext gc) {
@@ -35,10 +36,14 @@ public class Plane implements IRenderable{
 	}
 	
 	public boolean isCollide(Rocket rocket){
-		if(rocket.getX() > x && rocket.getX() < x + width && rocket.getY() > y && rocket.getY() < y + height){
+		if(rocket.getX() >= x && rocket.getX() <= x + width && rocket.getY() >= y && rocket.getY() <= y + height){
 			return true;
 		}
 		return false;
+	}
+	
+	public void collide(Rocket rocket){
+		rocket.explosion();
 	}
 
 }

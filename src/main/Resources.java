@@ -37,7 +37,7 @@ public class Resources {
 		oneCoinImage = new Image(ClassLoader.getSystemResource("img/onecoin.png").toString());
 		fiveCoinImage = new Image(ClassLoader.getSystemResource("img/fivecoin.png").toString());
 		explosionImage = new Image(ClassLoader.getSystemResource("img/explosion.gif").toString());
-		planeImage = new Image(ClassLoader.getSystemResource("img/plane.png").toString());
+		planeImage = new Image(ClassLoader.getSystemResource("img/planefix.png").toString());
 
 		soundtrack = new AudioClip(ClassLoader.getSystemResource("audio/unity.mp3").toString());
 		ldgoforlaunch = new AudioClip(ClassLoader.getSystemResource("audio/ldgoforlaunch.mp3").toString());

@@ -209,7 +209,7 @@ public class Rocket implements IRenderable{
 	}
 	
 	public boolean isVisible(){
-		return true;
+		return isvisible;
 	}
 	
 	public void rotateCCW(){
@@ -230,13 +230,6 @@ public class Rocket implements IRenderable{
 	
 	public void setPitch(int pitch){
 		this.pitch = pitch;
-	}
-	
-	public boolean isExplosion(){
-		if(!isvisible){
-			return true;
-		}
-		return false;
 	}
 	
 	public void explosion(){

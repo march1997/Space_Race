@@ -24,7 +24,7 @@ public class GameScreen extends StackPane{
 	
 	public static GraphicsContext gc;
 	public static String fuel = "100 %";
-	
+
 	public GameScreen() {
 		super();
 		
@@ -38,8 +38,10 @@ public class GameScreen extends StackPane{
 		gc.clearRect(0, 0, WIDTH, HEIGHT);
 		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, WIDTH, HEIGHT); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
-		for(int i = IRenderableHolder.getInstance().getEntities().size()-1 ; i >= 0  ; i--) {
+		gc.drawImage(Resources.explosionImage, rocket.getCenterOfMassX(), rocket.getCenterOfMassY());
+		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0  ; i--) {
 			if(!IRenderableHolder.getInstance().getEntities().get(i).isVisible()){
+				System.out.println("Remove");
 				IRenderableHolder.getInstance().getEntities().remove(i);
 			}
 			else{
