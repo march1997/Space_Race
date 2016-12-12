@@ -3,6 +3,7 @@ package obstacle;
 import graphics.IRenderable;
 import graphics.IRenderableHolder;
 import javafx.scene.canvas.GraphicsContext;
+import main.Main;
 import rocket.Rocket;
 
 public abstract class Coin implements IRenderable{
@@ -57,7 +58,7 @@ public abstract class Coin implements IRenderable{
 	
 	public void collect(){
 		this.visible = false;
-		score += this.score;
+		Main.score += this.score;
 	}
 	
 	public void still(double d){

@@ -1,11 +1,14 @@
 package graphics;
 
+import main.Main;
 import main.Resources;
 import obstacle.Coin;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class GameScreen extends StackPane{
 	
@@ -39,6 +42,9 @@ public class GameScreen extends StackPane{
 				IRenderableHolder.getInstance().getEntities().get(i).render(gc);
 			}
 		}
+		gc.setFill(Color.GREEN);
+		gc.setFont(Font.font("Arial", 25));
+		gc.fillText("Score : " + Main.score, 300, 30, 170);
 	}
 
 	public void moveBackgroundImage(double d){
@@ -49,6 +55,15 @@ public class GameScreen extends StackPane{
 			backgroundY = downMostY;
 		}*/
 		else{
+			if(d > 0 && d < 1){
+				System.out.println("Plus");
+				d = 1;
+			}
+			if(d < 0 && d > -1){
+				System.out.println("Minus");
+				d=-1;
+			}
+			d = (int) d;
 			backgroundY += d;
 			for(Object o : IRenderableHolder.getInstance().getEntities()){ // not finished yet :[ use to make coin float in the air
 				if(o instanceof Coin){

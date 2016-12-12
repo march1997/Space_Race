@@ -31,7 +31,7 @@ public class Main extends Application {
 	private GameScreen gameScreen;
 	private Scene scene;
 	
-	private int score = 0;
+	public static int score = 0;
 	
 	private boolean gameStart;
 
@@ -86,7 +86,7 @@ public class Main extends Application {
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost() && rocket.getVerticalSpeed() < 0){
 			rocket.move();
 			rocket.setY(260);
-			gameScreen.moveBackgroundImage((int)rocket.getVerticalSpeed());
+			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
 		}
 		else if(rocket.getVerticalSpeed() > 0 && gameScreen.isDownMost()){
 			rocket.move();
@@ -246,4 +246,17 @@ public class Main extends Application {
 		coinThread.start();
 		threads.add(coinThread);
 	}
+	
+	/*private void initScore(){
+		Thread scoreThread = new Thread(new Runnable() {
+			public void run() {
+				while(true){
+					synchronized (this) {
+						
+					}
+				}
+				
+			}
+		});
+	}*/
 }

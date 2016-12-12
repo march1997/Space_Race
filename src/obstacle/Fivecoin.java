@@ -6,7 +6,7 @@ import main.Resources;
 public class Fivecoin extends Coin{
 	
 	public Fivecoin(int x, int y){
-		super(100, x, y);
+		super(500, x, y);
 	}
 
 	@Override
