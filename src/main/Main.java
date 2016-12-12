@@ -34,6 +34,8 @@ public class Main extends Application {
 	public static int score = 0;
 	
 	private boolean gameStart;
+	
+	private boolean gamePause;
 
 	private long lastNanoTime;
 	
@@ -62,10 +64,13 @@ public class Main extends Application {
 				
 				double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
 				lastNanoTime = currentNanoTime;
+
 				
-				processInput();
-				updateGame();
-				renderGame();
+				if(!gamePause) {
+					processInput();
+					updateGame();
+					renderGame();
+				}
 			}
 		};
 		timer.start();
@@ -129,17 +134,18 @@ public class Main extends Application {
 					new OutOfPropellantException();
 				}
 			}
-			else if(keysPressed.contains(KeyCode.LEFT)){
+			if(keysPressed.contains(KeyCode.LEFT)){
 				if(rocket.getPitch()>-20) {
 					rocket.rotateCCW();
 				}
 			}
-			else if(keysPressed.contains(KeyCode.RIGHT)){
+			if(keysPressed.contains(KeyCode.RIGHT)){
 				if(rocket.getPitch()<20) {
 					rocket.rotateCW();
 				}
 			}
 		}
+		
 	}
 	
 	private void initRocket() {
@@ -186,6 +192,9 @@ public class Main extends Application {
 				KeyCode keyCode = arg0.getCode();
 				if(!keysPressed.contains(keyCode)){
 					keysPressed.add(keyCode);
+				}
+				if(keyCode == KeyCode.ENTER) {
+					gamePause = !gamePause;
 				}
 			}
 			
