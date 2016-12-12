@@ -31,8 +31,13 @@ public class GameScreen extends StackPane{
 		gc.clearRect(0, 0, WIDTH, HEIGHT);
 		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, WIDTH, HEIGHT); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
-		for(IRenderable r : IRenderableHolder.getInstance().getEntities()) {
-				r.render(gc);
+		for(int i = IRenderableHolder.getInstance().getEntities().size()-1 ; i >= 0  ; i--) {
+			if(!IRenderableHolder.getInstance().getEntities().get(i).isVisible()){
+				IRenderableHolder.getInstance().getEntities().remove(i);
+			}
+			else{
+				IRenderableHolder.getInstance().getEntities().get(i).render(gc);
+			}
 		}
 	}
 

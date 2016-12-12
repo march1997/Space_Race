@@ -120,6 +120,24 @@ public class Rocket implements IRenderable{
 		
 	}
 	
+	/*public void startSoundThread(GraphicsContext gc){
+		Thread backgroundRocketSound = new Thread(new Runnable() {
+			public void run() {
+				while(true){
+					if(isPropelling){
+						gc.drawImage(Resources.enginefire, x, y+210);
+						if(!Resources.enginecombustion.isPlaying() && !engineSoundPlayed) {
+							Resources.enginecombustion.play();
+							engineSoundPlayed = true;
+						}
+						isPropelling = false;
+					}
+				}
+			}
+		}, "backgroundRocketSound");
+		backgroundRocketSound.start();
+	}*/
+	
 	public double getWidth(){
 		return width;
 	}
@@ -194,5 +212,9 @@ public class Rocket implements IRenderable{
 	
 	public void setHorizontalSpeed(double horizontalSpeed){
 		this.horizontalSpeed = horizontalSpeed;
+	}
+	
+	public boolean getPropelling(){
+		return isPropelling;
 	}
 }

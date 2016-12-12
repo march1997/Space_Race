@@ -66,11 +66,10 @@ public class Main extends Application {
 				processInput();
 				updateGame();
 				renderGame();
-				
 			}
 		};
 		timer.start();
-		
+
 		
 	}
 
@@ -113,6 +112,7 @@ public class Main extends Application {
 				}
 			}
 		}
+		
 
 		System.out.println(rocket.toString());
 		
@@ -174,8 +174,8 @@ public class Main extends Application {
 		}, "backgroundMusic");
 		threads.add(backgroundMusic);
 		backgroundMusic.start();
-		
 	}
+		
 
 	private void initListener() {
 		
