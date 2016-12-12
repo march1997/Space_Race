@@ -49,11 +49,11 @@ public class GameScreen extends StackPane{
 			gc.drawImage(Resources.explosionImage, rocket.getCenterOfMassX(), rocket.getCenterOfMassY());
 		}
 		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0  ; i--) {
-			if(!IRenderableHolder.getInstance().getEntities().get(i).isVisible()){
+			if(IRenderableHolder.getInstance().getEntities().get(i) != null && !IRenderableHolder.getInstance().getEntities().get(i).isVisible()){
 				System.out.println("Remove");
 				IRenderableHolder.getInstance().getEntities().remove(i);
 			}
-			else{
+			else if(IRenderableHolder.getInstance().getEntities().get(i) != null){
 				IRenderableHolder.getInstance().getEntities().get(i).render(gc);
 			}
 		}

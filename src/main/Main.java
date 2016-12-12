@@ -257,20 +257,48 @@ public class Main extends Application {
 			@Override
 			public void run() {
 				int count=0;
-				int k=0;
-				while(true){
+				int k=- 100;
+				while(count <= 7){
 					Random rand = new Random();
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
-					int randomY = k;
-					count+=1;
-					k-=200;
-					if(count <= 10){
-						IRenderableHolder.getInstance().getEntities().add(new Plane(randomX, randomY, 1));
-					}
+					int randomspeed = rand.nextInt(3) + 1;
+					//int randomY = k;
+					int randomY = - rand.nextInt(200) + k;
+					System.out.println(randomY);
+					count += 1;
+					k -= 360;
+					IRenderableHolder.getInstance().getEntities().add(new Plane(randomX, randomY, randomspeed));
 				}
 			}
 		});
 		planeThread.start();
+		threads.add(planeThread);
+		
+		Thread planeThread2 = new Thread(new Runnable() {
+			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				while(true){
+					try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					for(IRenderable r : IRenderableHolder.getInstance().getEntities()){
+						if(r instanceof Plane){
+							Plane plane = (Plane) r;
+							plane.move();
+						}
+					}
+				}
+			}
+		});
+		planeThread2.start();
 	}
 	
 	private void initCoin(){ // A thread for creating coin
@@ -283,20 +311,18 @@ public class Main extends Application {
 				while(true){
 					Random rand = new Random();
 					k-=200;
-					System.out.println(k);
 					if(count>50){
 						break;
 					}
 					count+=1;
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
-					//int randomY = rand.nextInt(400);
+					//int randomY = rand.nextInt(200) - 200;
 					int randomY = k;
 					//try {
 						//Thread.sleep(3000);
 						if(random <= 7){ // probability to create onecoin is 70%
 							IRenderableHolder.getInstance().getEntities().add(new Onecoin(randomX, randomY));
-							IRenderableHolder.getInstance().getEntities().add(new Plane(0, 300, 5));
 						}
 						else{ // propability to create fivecoin is 30%
 							IRenderableHolder.getInstance().getEntities().add(new Fivecoin(randomX, randomY));

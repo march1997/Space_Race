@@ -20,8 +20,8 @@ public class Plane implements IRenderable{
 		this.y = y;
 		this.isvisible = true;
 		this.speed = speed;
-		this.width = 90;
-		this.height = 50;
+		this.width = 85;
+		this.height = 45;
 	}
 
 	@Override
@@ -48,5 +48,12 @@ public class Plane implements IRenderable{
 
 	public void still(double move){
 		this.y -= move;
+	}
+	
+	public void move(){
+		this.x += this.speed;
+		if(x > 480){
+			x -= 480;
+		}
 	}
 }
