@@ -175,9 +175,9 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-			       new RocketStage(5000, new Engine(5, 500), new Propellant(5000)), 
-			       new RocketStage(2000, new Engine(2, 2), new Propellant(4)), 
-			       new Payload(500));
+		          new RocketStage(5000, new Engine(5, 500), new Propellant(5000)), 
+		          new RocketStage(2000, new Engine(2, 2), new Propellant(4)), 
+		          new Payload(500));
 		
 		rocket = falcon9;
 
@@ -258,7 +258,7 @@ public class Main extends Application {
 			public void run() {
 				int count=0;
 				int k=- 100;
-				while(count <= 7){
+				while(count <= 5){
 					Random rand = new Random();
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
 					int randomspeed = rand.nextInt(3) + 1;
@@ -266,7 +266,7 @@ public class Main extends Application {
 					int randomY = - rand.nextInt(200) + k;
 					System.out.println(randomY);
 					count += 1;
-					k -= 360;
+					k -= 500;
 					IRenderableHolder.getInstance().getEntities().add(new Plane(randomX, randomY, randomspeed));
 				}
 			}
