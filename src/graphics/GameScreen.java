@@ -61,11 +61,9 @@ public class GameScreen extends StackPane{
 		}*/
 		else{
 			if(d > 0 && d < 1){
-				System.out.println("Plus");
 				d = 1;
 			}
 			if(d < 0 && d > -1){
-				System.out.println("Minus");
 				d=-1;
 			}
 			d = (int) d;

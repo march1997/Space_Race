@@ -11,6 +11,6 @@ public class Onecoin extends Coin{
 
 	@Override
 	public void render(GraphicsContext gc) {
-		gc.drawImage(Resources.oneCoin, this.getX(), this.getY());
+		gc.drawImage(Resources.oneCoinImage, this.getX(), this.getY());
 	}
 }

@@ -8,14 +8,18 @@ public class Resources {
 	public static Image rocketImage;
 	public static Image enginefire;
 	public static Image backgroundImage;
-	public static Image oneCoin;
-	public static Image fiveCoin;
+	public static Image oneCoinImage;
+	public static Image fiveCoinImage;
+	public static Image explosionImage;
+	public static Image planeImage;
 	public static AudioClip soundtrack;
 	public static AudioClip ldgoforlaunch;
 	public static AudioClip countdown;
 	public static AudioClip stageonepropulsionnominal;
 	public static AudioClip stageseperationconfirmed;
 	public static AudioClip enginecombustion;
+	public static AudioClip collectcoinsound;
+	public static AudioClip explosionsound;
 	
 	static{
 		try {
@@ -30,8 +34,10 @@ public class Resources {
 		rocketImage = new Image(ClassLoader.getSystemResource("img/rocket/full.png").toString());
 		enginefire = new Image(ClassLoader.getSystemResource("img/rocket/enginefire1.gif").toString());
 		backgroundImage = new Image(ClassLoader.getSystemResource("img/background.jpg").toString());
-		oneCoin = new Image(ClassLoader.getSystemResource("img/onecoin.png").toString());
-		fiveCoin = new Image(ClassLoader.getSystemResource("img/fivecoin.png").toString());
+		oneCoinImage = new Image(ClassLoader.getSystemResource("img/onecoin.png").toString());
+		fiveCoinImage = new Image(ClassLoader.getSystemResource("img/fivecoin.png").toString());
+		explosionImage = new Image(ClassLoader.getSystemResource("img/explosion.gif").toString());
+		planeImage = new Image(ClassLoader.getSystemResource("img/plane.png").toString());
 
 		soundtrack = new AudioClip(ClassLoader.getSystemResource("audio/unity.mp3").toString());
 		ldgoforlaunch = new AudioClip(ClassLoader.getSystemResource("audio/ldgoforlaunch.mp3").toString());
@@ -39,5 +45,7 @@ public class Resources {
 		stageonepropulsionnominal = new AudioClip(ClassLoader.getSystemResource("audio/stageonepropulsionnominal.mp3").toString());
 		stageseperationconfirmed = new AudioClip(ClassLoader.getSystemResource("audio/stageseperationconfirmed.mp3").toString());
 		enginecombustion = new AudioClip(ClassLoader.getSystemResource("audio/enginecombustion.mp3").toString());
+		collectcoinsound = new AudioClip(ClassLoader.getSystemResource("audio/collectcoinsound.mp3").toString());
+		explosionsound = new AudioClip(ClassLoader.getSystemResource("audio/explosion.mp3").toString());
 	}
 }

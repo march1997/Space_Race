@@ -11,7 +11,7 @@ public class Fivecoin extends Coin{
 
 	@Override
 	public void render(GraphicsContext gc) {
-		gc.drawImage(Resources.fiveCoin, this.getX(), this.getY());
+		gc.drawImage(Resources.fiveCoinImage, this.getX(), this.getY());
 	}
 
 }

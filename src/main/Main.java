@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import obstacle.Coin;
 import obstacle.Fivecoin;
 import obstacle.Onecoin;
+import obstacle.Plane;
 
 public class Main extends Application {
 	
@@ -34,6 +35,7 @@ public class Main extends Application {
 	private Scene scene;
 	
 	public static int score = 0;
+	public static boolean outoffuel = false;
 	
 	private boolean gameStart;
 	
@@ -68,7 +70,7 @@ public class Main extends Application {
 				lastNanoTime = currentNanoTime;
 
 				
-				if(!gamePause) {
+				if(!gamePause && !rocket.isExplosion()) {
 					processInput();
 					updateGame();
 					renderGame();
@@ -90,6 +92,7 @@ public class Main extends Application {
 		
 		rocket.accelerate();
 		
+		
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost() && rocket.getVerticalSpeed() < 0){
 			rocket.move();
 			rocket.setY(260);
@@ -101,6 +104,7 @@ public class Main extends Application {
 				rocket.setY(395);
 				rocket.setVerticalSpeed(0);
 				rocket.setHorizontalSpeed(0);
+				rocket.setPitch(0);
 			}
 		}
 		else if(rocket.getY() >= 260 && rocket.getVerticalSpeed() > 0){
@@ -116,11 +120,10 @@ public class Main extends Application {
 				Coin coin = (Coin) r;
 				if(coin.canCollect(rocket)){
 					coin.collect();
+					Resources.collectcoinsound.play();
 				}
 			}
 		}
-		
-
 		System.out.println(rocket.toString());
 		
 	}
@@ -135,6 +138,7 @@ public class Main extends Application {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
+							outoffuel = true;
 							gameScreen.fuel = "OUT OF FUEL";
 						}
 					});
@@ -159,9 +163,9 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-						 new RocketStage(500,	new Engine(5, 50),	new Propellant(200)), 
-						 new RocketStage(200,	new Engine(2, 2),	new Propellant(4)), 
-						 new Payload(500));
+			       new RocketStage(5000, new Engine(5, 500), new Propellant(5000)), 
+			       new RocketStage(2000, new Engine(2, 2), new Propellant(4)), 
+			       new Payload(500));
 		
 		rocket = falcon9;
 
@@ -239,39 +243,36 @@ public class Main extends Application {
 			
 			@Override
 			public void run() {
+				int k=0;
+				int nub=0;
 				while(true){
 					Random rand = new Random();
+					k-=200;
+					System.out.println(k);
+					if(nub>50){
+						break;
+					}
+					nub+=1;
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
-					int randomY = rand.nextInt(400);
-					try {
-						Thread.sleep(5000);
+					//int randomY = rand.nextInt(400);
+					int randomY = k;
+					//try {
+						//Thread.sleep(3000);
 						if(random <= 7){ // probability to create onecoin is 70%
 							IRenderableHolder.getInstance().getEntities().add(new Onecoin(randomX, randomY));
-						} /*need to change how to create a coin*/
+							IRenderableHolder.getInstance().getEntities().add(new Plane(0, 300, 5));
+						}
 						else{ // propability to create fivecoin is 30%
 							IRenderableHolder.getInstance().getEntities().add(new Fivecoin(randomX, randomY));
 						}
-					} catch (InterruptedException e) {
+					/*} catch (InterruptedException e) {
 						e.printStackTrace();
-					}
+					}*/
 				}
 			}
 		});
 		coinThread.start();
 		threads.add(coinThread);
 	}
-	
-	/*private void initScore(){
-		Thread scoreThread = new Thread(new Runnable() {
-			public void run() {
-				while(true){
-					synchronized (this) {
-						
-					}
-				}
-				
-			}
-		});
-	}*/
 }

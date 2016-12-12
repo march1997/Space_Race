@@ -3,6 +3,7 @@ package rocket;
 import exceptions.OutOfPropellantException;
 import graphics.IRenderable;
 import javafx.scene.canvas.GraphicsContext;
+import main.Main;
 import main.Resources;
 
 public class Rocket implements IRenderable{
@@ -20,6 +21,7 @@ public class Rocket implements IRenderable{
 	
 	private boolean isPropelling;
 	private boolean engineSoundPlayed;
+	private boolean isvisible;
 
 	private static final double GRAVITY = 0.01;
 	
@@ -44,6 +46,7 @@ public class Rocket implements IRenderable{
 		this.lateralForce = 0;
 		this.isPropelling = false;
 		this.engineSoundPlayed = false;
+		this.isvisible = true;
 	}
 	
 	public void propel() throws OutOfPropellantException {
@@ -110,7 +113,7 @@ public class Rocket implements IRenderable{
 		gc.translate(-this.getCenterOfMassX(), -this.getCenterOfMassY());
 		gc.drawImage(Resources.rocketImage, x, y);
 		
-		if(isPropelling){
+		if(isPropelling && !Main.outoffuel){
 			gc.drawImage(Resources.enginefire, x, y+210);
 			if(!Resources.enginecombustion.isPlaying() && !engineSoundPlayed) {
 				Resources.enginecombustion.play();
@@ -223,5 +226,20 @@ public class Rocket implements IRenderable{
 	
 	public boolean getPropelling(){
 		return isPropelling;
+	}
+	
+	public void setPitch(int pitch){
+		this.pitch = pitch;
+	}
+	
+	public boolean isExplosion(){
+		if(!isvisible){
+			return true;
+		}
+		return false;
+	}
+	
+	public void explosion(){
+		this.isvisible = false;
 	}
 }
