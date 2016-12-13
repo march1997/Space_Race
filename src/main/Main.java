@@ -23,6 +23,7 @@ import obstacle.Coin;
 import obstacle.Fivecoin;
 import obstacle.Onecoin;
 import obstacle.Plane;
+import obstacle.Satellite;
 
 public class Main extends Application {
 	
@@ -97,12 +98,10 @@ public class Main extends Application {
 		rocket.move();
 		
 		if(rocket.getY() <= 260 && !gameScreen.isUpMost() && rocket.getVerticalSpeed() < 0){
-			//rocket.move();
 			rocket.setY(260);
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
 		}
 		else if(rocket.getVerticalSpeed() > 0 && gameScreen.isDownMost()){
-			//rocket.move();
 			if(rocket.getY() >= 395){ // make rocket on the ground
 				rocket.setY(395);
 				rocket.setVerticalSpeed(0);
@@ -113,7 +112,6 @@ public class Main extends Application {
 		else if(rocket.getY() >= 260 && rocket.getVerticalSpeed() > 0){
 			rocket.setY(260);
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
-			//rocket.move();
 		}	
 		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0 ; i --){
 			IRenderable r = IRenderableHolder.getInstance().getEntities().get(i);
@@ -175,7 +173,7 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-		          new RocketStage(5000, new Engine(5, 500), new Propellant(5000)), 
+		          new RocketStage(5000, new Engine(5, 500), new Propellant(10000)), 
 		          new RocketStage(2000, new Engine(2, 2), new Propellant(4)), 
 		          new Payload(500));
 		
@@ -252,7 +250,7 @@ public class Main extends Application {
 	}
 	
 	private void initPlane(){
-		Thread planeThread = new Thread(new Runnable() {
+		Thread planeThread = new Thread(new Runnable() { // generate planes
 			
 			@Override
 			public void run() {
@@ -274,7 +272,7 @@ public class Main extends Application {
 		planeThread.start();
 		threads.add(planeThread);
 		
-		Thread planeThread2 = new Thread(new Runnable() {
+		Thread planeThread2 = new Thread(new Runnable() { // make planes move
 			public void run() {
 				try {
 					Thread.sleep(1000);
@@ -335,5 +333,28 @@ public class Main extends Application {
 		});
 		coinThread.start();
 		threads.add(coinThread);
+	}
+	
+	private void initSatellite(){
+		Thread satelliteThread = new Thread(new Runnable() {
+			public void run() {
+				int k=0;
+				int count=0;
+				while(true){
+					Random rand = new Random();
+					k-=200;
+					if(count>10){
+						break;
+					}
+					count+=1;
+					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
+					//int randomY = rand.nextInt(200) - 200;
+					int randomY = k;
+					
+				}
+			}
+		});
+		satelliteThread.start();
+		threads.add(satelliteThread);
 	}
 }

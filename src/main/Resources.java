@@ -12,6 +12,7 @@ public class Resources {
 	public static Image fiveCoinImage;
 	public static Image explosionImage;
 	public static Image planeImage;
+	public static Image satelliteImage;
 	public static AudioClip soundtrack;
 	public static AudioClip ldgoforlaunch;
 	public static AudioClip countdown;
@@ -38,6 +39,7 @@ public class Resources {
 		fiveCoinImage = new Image(ClassLoader.getSystemResource("img/fivecoin.png").toString());
 		explosionImage = new Image(ClassLoader.getSystemResource("img/explosion.gif").toString());
 		planeImage = new Image(ClassLoader.getSystemResource("img/planefix.png").toString());
+		satelliteImage = new Image(ClassLoader.getSystemResource("img/satellite2.png").toString());
 
 		soundtrack = new AudioClip(ClassLoader.getSystemResource("audio/unity.mp3").toString());
 		ldgoforlaunch = new AudioClip(ClassLoader.getSystemResource("audio/ldgoforlaunch.mp3").toString());
