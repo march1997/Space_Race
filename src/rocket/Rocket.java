@@ -41,8 +41,8 @@ public class Rocket implements IRenderable{
 		this.stageCount = 2;
 		this.x = x;
 		this.y = y;
-		this.width = 20;
-		this.height = 100;
+		this.width = 24;
+		this.height = 75;
 		this.pitch = 0;
 		this.verticalSpeed = 0;
 		this.horizontalSpeed = 0;

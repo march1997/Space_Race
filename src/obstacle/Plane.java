@@ -36,7 +36,12 @@ public class Plane implements IRenderable{
 	}
 	
 	public boolean isCollide(Rocket rocket){
-		if((rocket.getX() >= x && rocket.getX() <= x + width && rocket.getY() >= y && rocket.getY() <= y + height)){
+		if((this.x <= rocket.getX() && this.x + this.getWidth() >= rocket.getX() && this.y <= rocket.getY() && this.y + this.getHeight() >= rocket.getY())
+				|| (this.x <= rocket.getX() && 	this.x + this.getWidth() >= rocket.getX() && this.y <= rocket.getY() + rocket.getHeight() /2  && this.y + this.getHeight() >= rocket.getY() + rocket.getHeight() /2)
+				|| (this.x <= rocket.getX() && this.x + this.getWidth() >= rocket.getX() && this.y <= rocket.getY() + rocket.getHeight() && this.y + this.getHeight() >= rocket.getY() + rocket.getHeight())
+				|| (this.x <= rocket.getX() + rocket.getWidth() && this.x + this.getWidth() >= rocket.getX() + rocket.getWidth() && this.y <= rocket.getY() + rocket.getHeight() / 2 && this.y + this.getHeight() >= rocket.getY() + rocket.getHeight() / 2)
+				|| (this.x <= rocket.getX() + rocket.getWidth() && this.x + this.getWidth() >= rocket.getX() + rocket.getWidth() && this.y <= rocket.getY() && this.y + this.getHeight() >= rocket.getY())	
+					){
 			return true;
 		}
 		return false;
@@ -55,5 +60,13 @@ public class Plane implements IRenderable{
 		if(x > 480){
 			x -= 480;
 		}
+	}
+	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
 	}
 }

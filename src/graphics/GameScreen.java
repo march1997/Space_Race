@@ -47,7 +47,7 @@ public class GameScreen extends StackPane{
 			rocket.setVerticalSpeed(0);
 		}
 		if(!rocket.isVisible() && explosioncount <= 65){
-			gc.drawImage(Resources.explosionImage, rocket.getCenterOfMassX(), rocket.getCenterOfMassY());
+			gc.drawImage(Resources.explosionImage, rocket.getX(), rocket.getY());
 		}
 		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0  ; i--) {
 			if(IRenderableHolder.getInstance().getEntities().get(i) != null && !IRenderableHolder.getInstance().getEntities().get(i).isVisible()){

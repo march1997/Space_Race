@@ -34,6 +34,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -87,26 +88,36 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		isEnding = false;
-		startScreen = new VBox(10);
+		startScreen = new VBox(15);
 		startScreen.setPrefSize(480, 720);
 
 		Slider sliderStageOneMass = new Slider(10000, 50000, 22200);
-		Slider sliderStageOneEnginePropellantRate = new Slider(10000, 40000, 25000);
-		Slider sliderStageOneEngineThrustRate = new Slider(1000000, 10000000, 7607000);
-		Slider sliderStageOnePropellantMass = new Slider(100000, 600000, 409500);
+		Slider sliderStageOneEnginePropellantRate = new Slider(5000, 40000, 7000);
+		Slider sliderStageOneEngineThrustRate = new Slider(1000000, 40000000, 12000000);
+		Slider sliderStageOnePropellantMass = new Slider(10000, 1000000, 600000);
 		Slider sliderStageTwoMass = new Slider(1000, 10000, 4000);
 		Slider sliderStageTwoEnginePropellantRate = new Slider(1000, 4000, 2500);
 		Slider sliderStageTwoEngineThrustRate = new Slider(500000, 2000000, 934000);
-		Slider sliderStageTwoPropellantMass = new Slider(50000, 200000, 107500);
+		Slider sliderStageTwoPropellantMass = new Slider(5000, 700000, 500000);
 		Slider sliderPayloadMass = new Slider(5000, 50000, 20000);
 		Button playButton = new Button("Play");
 		
 		Label spacerace = new Label("Space Race");
-		spacerace.setFont(Font.font("Arial", 30));
-		//spacerace.setTextFill(Color.BLACK);
+		spacerace.setFont(Font.font("Consolas", 40));
+		spacerace.setTextFill(Color.GREEN);
 		spacerace.setText("Space Race");
 		
-		Label lb1 = new Label("Rocket stage one mass :");
+		Label lb10 = new Label("Rocket stage one mass : ");
+		Label lb20 = new Label("Rocket stage one engine propellant rate : ");
+		Label lb30 = new Label("Rocket stage one engine thrust rate : ");
+		Label lb40 = new Label("Rocket stage one propellant mass : ");
+		Label lb50 = new Label("Rocket stage two mass : ");
+		Label lb60 = new Label("Rocket stage two engine propellant rate : ");
+		Label lb70 = new Label("Rocket stage two engine thrust rate : ");
+		Label lb80 = new Label("Rocket stage two propellant mass : ");
+		Label lb90 = new Label("Rocket payload mass : ");
+		
+		Label lb1 = new Label("");
 		Label lb2 = new Label("");
 		Label lb3 = new Label("");
 		Label lb4 = new Label("");
@@ -115,6 +126,36 @@ public class Main extends Application {
 		Label lb7 = new Label("");
 		Label lb8 = new Label("");
 		Label lb9 = new Label("");
+		
+		HBox hbox1 = new HBox(10);
+		HBox hbox2 = new HBox(10);
+		HBox hbox3 = new HBox(10);
+		HBox hbox4 = new HBox(10);
+		HBox hbox5 = new HBox(10);
+		HBox hbox6 = new HBox(10);
+		HBox hbox7 = new HBox(10);
+		HBox hbox8 = new HBox(10);
+		HBox hbox9 = new HBox(10);
+		hbox1.setAlignment(Pos.BASELINE_CENTER);
+		hbox2.setAlignment(Pos.BASELINE_CENTER);
+		hbox3.setAlignment(Pos.BASELINE_CENTER);
+		hbox4.setAlignment(Pos.BASELINE_CENTER);
+		hbox5.setAlignment(Pos.BASELINE_CENTER);
+		hbox6.setAlignment(Pos.BASELINE_CENTER);
+		hbox7.setAlignment(Pos.BASELINE_CENTER);
+		hbox8.setAlignment(Pos.BASELINE_CENTER);
+		hbox9.setAlignment(Pos.BASELINE_CENTER);
+		
+		hbox1.getChildren().addAll(lb10, lb1);
+		hbox2.getChildren().addAll(lb20, lb2);
+		hbox3.getChildren().addAll(lb30, lb3);
+		hbox4.getChildren().addAll(lb40, lb4);
+		hbox5.getChildren().addAll(lb50, lb5);
+		hbox6.getChildren().addAll(lb60, lb6);
+		hbox7.getChildren().addAll(lb70, lb7);
+		hbox8.getChildren().addAll(lb80, lb8);
+		hbox9.getChildren().addAll(lb90, lb9);
+		
 		SimpleIntegerProperty s1 = new SimpleIntegerProperty();
 		SimpleIntegerProperty s2 = new SimpleIntegerProperty();
 		SimpleIntegerProperty s3 = new SimpleIntegerProperty();
@@ -124,9 +165,8 @@ public class Main extends Application {
 		SimpleIntegerProperty s7 = new SimpleIntegerProperty();
 		SimpleIntegerProperty s8 = new SimpleIntegerProperty();
 		SimpleIntegerProperty s9 = new SimpleIntegerProperty();
-		//lb1.textProperty().bind(sliderStageOneEnginePropellantRate.valueProperty().asString());
+
 		s1.bind(sliderStageOneMass.valueProperty());
-		StringProperty s = new SimpleStringProperty("Test");
 		lb1.textProperty().bind(s1.asString());
 		s2.bind(sliderStageOneEnginePropellantRate.valueProperty());
 		lb2.textProperty().bind(s2.asString());
@@ -156,15 +196,15 @@ public class Main extends Application {
 		startScreen.getChildren().add(sliderStageTwoPropellantMass);
 		startScreen.getChildren().add(sliderPayloadMass);
 		startScreen.getChildren().add(playButton);
-		startScreen.getChildren().add(lb1);
-		startScreen.getChildren().add(lb2);
-		startScreen.getChildren().add(lb3);
-		startScreen.getChildren().add(lb4);
-		startScreen.getChildren().add(lb5);
-		startScreen.getChildren().add(lb6);
-		startScreen.getChildren().add(lb7);
-		startScreen.getChildren().add(lb8);
-		startScreen.getChildren().add(lb9);
+		startScreen.getChildren().add(hbox1);
+		startScreen.getChildren().add(hbox2);
+		startScreen.getChildren().add(hbox3);
+		startScreen.getChildren().add(hbox4);
+		startScreen.getChildren().add(hbox5);
+		startScreen.getChildren().add(hbox6);
+		startScreen.getChildren().add(hbox7);
+		startScreen.getChildren().add(hbox8);
+		startScreen.getChildren().add(hbox9);
 		
 		startScreen.setAlignment(Pos.CENTER);
 		
@@ -206,13 +246,11 @@ public class Main extends Application {
 									updateGame();
 								}
 									renderGame();
-								
 							}
 						};
 						timer.start();
 					}
 				});
-				
 			}
 		}, "gameThread");
 		threads.add(gameThread);
@@ -241,6 +279,23 @@ public class Main extends Application {
 	protected void renderGame() {
 		
 		gameScreen.render(rocket);
+		
+		if((!rocket.isVisible() && explosiontime == 1) || (rocket.getY() <= 0 && explosiontime == 0) || (isEnding && explosiontime == 0)){ // show score at the end of the game
+			explosiontime += 1;
+			isEnding = true;
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Space Race");
+			alert.setHeaderText(null);
+			alert.setContentText("Your score is " + score + "\n" + "Thank you for playing!");
+			alert.show();
+			alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
+				
+				@Override
+				public void handle(DialogEvent event) {
+					System.exit(0);
+				}
+			});
+		}
 		
 	}
 
@@ -299,7 +354,7 @@ public class Main extends Application {
 		}
 		System.out.println(rocket.toString());
 		
-		if((!rocket.isVisible() && explosiontime == 1) || (rocket.getY() <= 0 && explosiontime == 0)){ // show score at the end of the game
+		/*if((!rocket.isVisible() && explosiontime == 1) || (rocket.getY() <= 0 && explosiontime == 0) || (isEnding && explosiontime == 0)){ // show score at the end of the game
 			explosiontime += 1;
 			isEnding = true;
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -307,17 +362,17 @@ public class Main extends Application {
 			alert.setHeaderText(null);
 			alert.setContentText("Your score is " + score + "\n" + "Thank you for playing!");
 			alert.show();
-			//Optional<ButtonType> result = alert.showAndWait();
-			//System.exit(0);
 			alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
 				
 				@Override
 				public void handle(DialogEvent event) {
-					// TODO Auto-generated method stub
 					System.exit(0);
 				}
 			});
-		}
+			for(Thread thread : threads){
+				thread.interrupt();
+			}
+		}*/
 		
 		if(rocket.isRocketStageOne() && rocket.getY() <= 260){
 			rocket.changeState();
@@ -336,6 +391,7 @@ public class Main extends Application {
 						public void run() {
 							outoffuel = true;
 							gameScreen.fuel = "OUT OF FUEL";
+							isEnding = true;
 						}
 					});
 				}
@@ -463,14 +519,12 @@ public class Main extends Application {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				while(true){
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					for(IRenderable r : IRenderableHolder.getInstance().getEntities()){
@@ -491,11 +545,11 @@ public class Main extends Application {
 			@Override
 			public void run() {
 				int k = 0;
-				int count = 0;
+				int count = 1;
 				while(true){
 					Random rand = new Random();
 					k -= 200;
-					if(count > 70){
+					if(count >= 70){ // generate 70 coins
 						break;
 					}
 					count+=1;
@@ -519,10 +573,10 @@ public class Main extends Application {
 		Thread satelliteThread = new Thread(new Runnable() {
 			public void run() {
 				int k = -2880;
-				int count = 0;
+				int count = 1;
 				while(true){
 					Random rand = new Random();
-					if(count > 10){
+					if(count >= 10){ // generate 10 satellites
 						break;
 					}
 					count += 1;
