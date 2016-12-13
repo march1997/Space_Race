@@ -10,7 +10,7 @@ public class Propellant {
 	private double density;
 	private double massmax;
 	
-	public Propellant(int mass) {
+	public Propellant(double mass) {
 		this.mass = mass;
 		this.massmax = mass;
 	}

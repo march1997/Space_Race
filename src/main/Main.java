@@ -12,8 +12,11 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import obstacle.Coin;
 import obstacle.Fivecoin;
 import obstacle.Onecoin;
@@ -53,12 +57,21 @@ public class Main extends Application {
 	
 	private long lastNanoTime;
 	
-	
+	private double stageOneMass;
+	private double stageOneEnginePropellantRate;
+	private double stageOneEngineThrustRate;
+	private double stageOnePropellantMass;
+	private double stageTwoMass;
+	private double stageTwoEnginePropellantRate;
+	private double stageTwoEngineThrustRate;
+	private double stageTwoPropellantMass;
+	private double payloadMass;
 
 	@Override
 	public void start(Stage primaryStage) {
 		
 		startScreen = new VBox(20);
+		startScreen.setPrefSize(480, 720);
 
 		Slider sliderStageOneMass = new Slider(1000, 5000, 10000);
 		Slider sliderStageOneEnginePropellantRate = new Slider(1, 20, 5);
@@ -69,6 +82,7 @@ public class Main extends Application {
 		Slider sliderStageTwoEngineThrustRate = new Slider(100, 4000, 400);
 		Slider sliderStageTwoPropellantMass = new Slider(500, 10000, 2000);
 		Slider sliderPayloadMass = new Slider(100, 5000, 500);
+		Button playButton = new Button("Play");
 				
 		startScreen.getChildren().add(sliderStageOneMass);
 		startScreen.getChildren().add(sliderStageOneEnginePropellantRate);
@@ -79,46 +93,76 @@ public class Main extends Application {
 		startScreen.getChildren().add(sliderStageTwoEngineThrustRate);
 		startScreen.getChildren().add(sliderStageTwoPropellantMass);
 		startScreen.getChildren().add(sliderPayloadMass);
-				
+		startScreen.getChildren().add(playButton);
+		
+		startScreen.setAlignment(Pos.CENTER);
+		
 		startScene = new Scene(startScreen);
-		//primaryStage.setScene(startScene);
+		primaryStage.setScene(startScene);
 		primaryStage.setTitle("Space Race");
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
-		gameScreen = new GameScreen();
-		gameScene = new Scene(gameScreen);
-		primaryStage.setScene(gameScene);
-		primaryStage.setScene(startScene);
-		
-		//primaryStage.setScene(gameScene);
-		primaryStage.show();
-
-		initResources();
-		initListener();
-		initRocket();
-		initCoin();
-		initPlane();
-		
-		lastNanoTime = System.nanoTime();
-		
-		AnimationTimer timer = new AnimationTimer() {
+		Thread gameThread = new Thread(new Runnable() {
 			
 			@Override
-			public void handle(long currentNanoTime) {
+			public void run() {
 				
-				double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
-				lastNanoTime = currentNanoTime;
-				
-				//if(!gamePause && !rocket.isExplosion()) {
+				Platform.runLater(new Runnable() {
 					
-					processInput();
-					updateGame();
-					renderGame();
-				//}
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						gameScreen = new GameScreen();
+						gameScene = new Scene(gameScreen);
+						primaryStage.setScene(gameScene);
+						initResources();
+						initListener();
+						initRocket();
+						initCoin();
+						initPlane();
+						lastNanoTime = System.nanoTime();
+						AnimationTimer timer = new AnimationTimer() {
+
+							@Override
+							public void handle(long currentNanoTime) {
+
+								double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
+								lastNanoTime = currentNanoTime;
+
+								//if(!gamePause && !rocket.isExplosion()) {
+								processInput();
+								updateGame();
+								renderGame();
+								//}
+							}
+						};
+						timer.start();
+					}
+				});
+				
 			}
-		};
-		timer.start();
+		}, "gameThread");
+		threads.add(gameThread);
+		
+		playButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				stageOneMass = sliderStageOneMass.getValue();
+				stageOneEnginePropellantRate = sliderStageOneEnginePropellantRate.getValue();
+				stageOneEngineThrustRate = sliderStageOneEngineThrustRate.getValue();
+				stageOnePropellantMass = sliderStageOnePropellantMass.getValue();
+				stageTwoMass = sliderStageTwoMass.getValue();
+				stageTwoEnginePropellantRate = sliderStageTwoEnginePropellantRate.getValue();
+				stageTwoEngineThrustRate = sliderStageTwoEngineThrustRate.getValue();
+				stageTwoPropellantMass = sliderStageTwoMass.getValue();
+				payloadMass = sliderPayloadMass.getValue();
+				
+				gameThread.start();
+			}
+		});
 		
 	}
 
@@ -209,9 +253,9 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-		          new RocketStage(5000, new Engine(5, 500), new Propellant(10000)), 
-		          new RocketStage(2000, new Engine(2, 2), new Propellant(4)), 
-		          new Payload(500));
+		          new RocketStage(stageOneMass, new Engine(stageOneEnginePropellantRate, stageOneEngineThrustRate), new Propellant(stageOnePropellantMass)), 
+		          new RocketStage(stageTwoMass, new Engine(stageTwoEnginePropellantRate, stageTwoEngineThrustRate), new Propellant(stageTwoPropellantMass)), 
+		          new Payload(payloadMass));
 		
 		rocket = falcon9;
 
@@ -371,7 +415,7 @@ public class Main extends Application {
 		threads.add(coinThread);
 	}
 	
-	/*private void initSatellite(){
+	private void initSatellite(){
 		Thread satelliteThread = new Thread(new Runnable() {
 			public void run() {
 				int k=0;
@@ -392,5 +436,5 @@ public class Main extends Application {
 		});
 		satelliteThread.start();
 		threads.add(satelliteThread);
-	}*/
+	}
 }
