@@ -36,7 +36,7 @@ public class Plane implements IRenderable{
 	}
 	
 	public boolean isCollide(Rocket rocket){
-		if(rocket.getX() >= x && rocket.getX() <= x + width && rocket.getY() >= y && rocket.getY() <= y + height){
+		if((rocket.getX() >= x && rocket.getX() <= x + width && rocket.getY() >= y && rocket.getY() <= y + height)){
 			return true;
 		}
 		return false;

@@ -7,6 +7,7 @@ import graphics.*;
 import rocket.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.zip.InflaterInputStream;
 
@@ -18,7 +19,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -53,6 +58,7 @@ public class Main extends Application {
 	
 	public static int score = 0;
 	public static boolean outoffuel = false;
+	public static boolean isEnding;
 	
 	private boolean gameStart = false;
 	
@@ -75,6 +81,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
+		isEnding = false;
 		startScreen = new VBox(20);
 		startScreen.setPrefSize(480, 720);
 
@@ -88,12 +95,10 @@ public class Main extends Application {
 		Slider sliderStageTwoPropellantMass = new Slider(50000, 200000, 107500);
 		Slider sliderPayloadMass = new Slider(5000, 50000, 20000);
 		Button playButton = new Button("Play");
-		Button bt = new Button();
-		Label lb = new Label("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Label lb = new Label("");
+		SimpleIntegerProperty s1 = new SimpleIntegerProperty();
 		lb.textProperty().bind(sliderStageOneEnginePropellantRate.valueProperty().asString());
-		SimpleIntegerProperty s = new SimpleIntegerProperty();
-		s.bind(sliderStageOneMass.valueProperty());
-		bt.textProperty().bind(s.asString());
+		s1.bind(sliderStageOneMass.valueProperty());
 				
 		startScreen.getChildren().add(sliderStageOneMass);
 		startScreen.getChildren().add(sliderStageOneEnginePropellantRate);
@@ -105,7 +110,6 @@ public class Main extends Application {
 		startScreen.getChildren().add(sliderStageTwoPropellantMass);
 		startScreen.getChildren().add(sliderPayloadMass);
 		startScreen.getChildren().add(playButton);
-		startScreen.getChildren().add(bt);
 		startScreen.getChildren().add(lb);
 		
 		startScreen.setAlignment(Pos.CENTER);
@@ -133,7 +137,7 @@ public class Main extends Application {
 						initListener();
 						initRocket();
 						initCoin();
-						//initPlane();
+						initPlane();
 						initSatellite();
 						lastNanoTime = System.nanoTime();
 						AnimationTimer timer = new AnimationTimer() {
@@ -143,12 +147,12 @@ public class Main extends Application {
 
 								double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
 								lastNanoTime = currentNanoTime;
-
-								//if(!gamePause && !rocket.isExplosion()) {
-								processInput();
-								updateGame();
-								renderGame();
-								//}
+								if(!isEnding){
+									processInput();
+									updateGame();
+								}
+									renderGame();
+								
 							}
 						};
 						timer.start();
@@ -187,7 +191,7 @@ public class Main extends Application {
 	}
 
 	protected void updateGame() {
-
+		
 		rocket.accelerate();
 		rocket.move();
 		
@@ -196,8 +200,14 @@ public class Main extends Application {
 			gameScreen.moveBackgroundImage(rocket.getVerticalSpeed());
 		}
 		else if(rocket.getVerticalSpeed() > 0 && gameScreen.isDownMost()){
-			if(rocket.getY() >= 395){ // make rocket on the ground
+			if(rocket.getY() >= 395 && rocket.isRocketStageOne()){ // make rocketstageone on the ground
 				rocket.setY(395);
+				rocket.setVerticalSpeed(0);
+				rocket.setHorizontalSpeed(0);
+				rocket.setPitch(0);
+			}
+			else if(rocket.getY() >= 530 && !rocket.isRocketStageOne()){ // make rocketstagetwo on the ground
+				rocket.setY(530);
 				rocket.setVerticalSpeed(0);
 				rocket.setHorizontalSpeed(0);
 				rocket.setPitch(0);
@@ -209,9 +219,9 @@ public class Main extends Application {
 		}	
 		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0 ; i --){
 			IRenderable r = IRenderableHolder.getInstance().getEntities().get(i);
-			if(r instanceof Coin){
+			if(r instanceof Coin ){
 				Coin coin = (Coin) r;
-				if(coin.canCollect(rocket)){
+				if(rocket.isVisible() && coin.canCollect(rocket)){
 					coin.collect();
 					Resources.collectcoinsound.play();
 				}
@@ -219,7 +229,6 @@ public class Main extends Application {
 			else if(r instanceof Plane){
 				Plane plane = (Plane) r;
 				if(plane.isCollide(rocket)){
-					System.out.println("Collide");
 					plane.collide(rocket);
 				}
 			}
@@ -236,6 +245,29 @@ public class Main extends Application {
 		}
 		System.out.println(rocket.toString());
 		
+		if((!rocket.isVisible() && explosiontime == 1) || (rocket.getY() <= 0 && explosiontime == 0)){ // show score at the end of the game
+			explosiontime += 1;
+			isEnding = true;
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Space Race");
+			alert.setHeaderText(null);
+			alert.setContentText("Your score is " + score + "\n" + "Thank you for playing!");
+			alert.show();
+			//Optional<ButtonType> result = alert.showAndWait();
+			//System.exit(0);
+			alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
+				
+				@Override
+				public void handle(DialogEvent event) {
+					// TODO Auto-generated method stub
+					System.exit(0);
+				}
+			});
+		}
+		
+		if(rocket.isRocketStageOne() && rocket.getY() <= 260){
+			rocket.changeState();
+		}
 	}
 
 	protected void processInput() {
@@ -404,30 +436,24 @@ public class Main extends Application {
 			
 			@Override
 			public void run() {
-				int k=0;
-				int count=0;
+				int k = 0;
+				int count = 0;
 				while(true){
 					Random rand = new Random();
-					k-=200;
-					if(count>70){
+					k -= 200;
+					if(count > 70){
 						break;
 					}
 					count+=1;
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
-					//int randomY = rand.nextInt(200) - 200;
 					int randomY = rand.nextInt(100) + k;
-					//try {
-						//Thread.sleep(3000);
 						if(random <= 7){ // probability to create onecoin is 70%
 							IRenderableHolder.getInstance().getEntities().add(new Onecoin(randomX, randomY));
 						}
 						else{ // propability to create fivecoin is 30%
 							IRenderableHolder.getInstance().getEntities().add(new Fivecoin(randomX, randomY));
 						}
-					/*} catch (InterruptedException e) {
-						e.printStackTrace();
-					}*/
 				}
 			}
 		});
@@ -442,13 +468,12 @@ public class Main extends Application {
 				int count = 0;
 				while(true){
 					Random rand = new Random();
-					if(count>10){
+					if(count > 10){
 						break;
 					}
-					count+=1;
-					k-=500;
-					int randomX = rand.nextInt((int) (480-new Satellite(0, 0).getWidth()))+1;
-					//int randomY = rand.nextInt(200) - 200;
+					count += 1;
+					k -= 500;
+					int randomX = rand.nextInt((int) (480 - new Satellite(0, 0).getWidth()))+1;
 					int randomY = rand.nextInt(200) + k;
 					IRenderableHolder.getInstance().getEntities().add(new Satellite(randomX, randomY));
 					

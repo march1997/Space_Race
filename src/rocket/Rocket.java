@@ -16,12 +16,17 @@ public class Rocket implements IRenderable{
 	private double pitch;
 	private double verticalSpeed, horizontalSpeed, rotationalSpeed;
 	private double verticalAcceleration, horizontalAcceleration, rotationalAcceleration;
-	
+	private double gooutx = 0;
+	private double goouty = 0;
+
 	private int stageCount;
+	private int moveout = 0;
+	private int count = 0;
 	
 	private boolean isPropelling;
 	private boolean engineSoundPlayed;
 	private boolean isvisible;
+	private boolean isRocketStageOne;
 
 	private static final double GRAVITY = 9.8 / 180;
 	
@@ -47,6 +52,7 @@ public class Rocket implements IRenderable{
 		this.isPropelling = false;
 		this.engineSoundPlayed = false;
 		this.isvisible = true;
+		this.isRocketStageOne = true;
 	}
 	
 	public void propel() throws OutOfPropellantException {
@@ -110,10 +116,28 @@ public class Rocket implements IRenderable{
 		gc.translate(this.getCenterOfMassX(), this.getCenterOfMassY()); /* translate to rotate rocket correctly */
 		gc.rotate(pitch);
 		gc.translate(-this.getCenterOfMassX(), -this.getCenterOfMassY());
-		gc.drawImage(Resources.rocketImage, x, y);
+		
+		if(isRocketStageOne){
+			gc.drawImage(Resources.rocketImage, x, y);
+		}
+		else{
+			if(count == 0){
+				count += 1;
+				gooutx = x;
+				goouty = y;
+			}
+			moveout += 20;
+			gc.drawImage(Resources.rocketImageHalfUp, x, y);
+			gc.drawImage(Resources.rocketImageHalfDown, gooutx + moveout, goouty + 75);
+		}
 		
 		if(isPropelling && !Main.outoffuel){
-			gc.drawImage(Resources.enginefire, x, y+210);
+			if(isRocketStageOne){
+				gc.drawImage(Resources.enginefire, x, y + 210);
+			}
+			else{
+				gc.drawImage(Resources.enginefire2, x, y + 75);
+			}
 			if(!Resources.enginecombustion.isPlaying() && !engineSoundPlayed) {
 				Resources.enginecombustion.play();
 				engineSoundPlayed = true;
@@ -215,5 +239,13 @@ public class Rocket implements IRenderable{
 	
 	public void explosion(){
 		this.isvisible = false;
+	}
+	
+	public boolean isRocketStageOne(){
+		return isRocketStageOne;
+	}
+	
+	public void changeState(){
+		isRocketStageOne = false;
 	}
 }

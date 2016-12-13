@@ -7,12 +7,15 @@ public class Resources {
 	// for loading resources
 	public static Image rocketImage;
 	public static Image enginefire;
+	public static Image enginefire2;
 	public static Image backgroundImage;
 	public static Image oneCoinImage;
 	public static Image fiveCoinImage;
 	public static Image explosionImage;
 	public static Image planeImage;
 	public static Image satelliteImage;
+	public static Image rocketImageHalfUp;
+	public static Image rocketImageHalfDown;
 	public static AudioClip soundtrack;
 	public static AudioClip ldgoforlaunch;
 	public static AudioClip countdown;
@@ -33,7 +36,10 @@ public class Resources {
 	public static void loadResource(){
 		//load all the resources once
 		rocketImage = new Image(ClassLoader.getSystemResource("img/rocket/full.png").toString());
+		rocketImageHalfUp = new Image(ClassLoader.getSystemResource("img/rocket/stage2anddragon.png").toString());
+		rocketImageHalfDown = new Image(ClassLoader.getSystemResource("img/rocket/stage1.png").toString());
 		enginefire = new Image(ClassLoader.getSystemResource("img/rocket/enginefire1.gif").toString());
+		enginefire2 = new Image(ClassLoader.getSystemResource("img/rocket/enginefire2.gif").toString());
 		backgroundImage = new Image(ClassLoader.getSystemResource("img/background.jpg").toString());
 		oneCoinImage = new Image(ClassLoader.getSystemResource("img/onecoin.png").toString());
 		fiveCoinImage = new Image(ClassLoader.getSystemResource("img/fivecoin.png").toString());

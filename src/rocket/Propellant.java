@@ -1,6 +1,7 @@
 package rocket;
 
 import exceptions.OutOfPropellantException;
+
 import graphics.GameScreen;
 import javafx.scene.canvas.GraphicsContext;
 
