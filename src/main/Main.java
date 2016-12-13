@@ -81,7 +81,7 @@ public class Main extends Application {
 		startScreen.getChildren().add(sliderPayloadMass);
 				
 		startScene = new Scene(startScreen);
-		primaryStage.setScene(startScene);
+		//primaryStage.setScene(startScene);
 		primaryStage.setTitle("Space Race");
 		primaryStage.setResizable(false);
 		primaryStage.show();
@@ -89,6 +89,10 @@ public class Main extends Application {
 		gameScreen = new GameScreen();
 		gameScene = new Scene(gameScreen);
 		primaryStage.setScene(gameScene);
+		primaryStage.setScene(startScene);
+		
+		//primaryStage.setScene(gameScene);
+		primaryStage.show();
 
 		initResources();
 		initListener();
@@ -107,6 +111,7 @@ public class Main extends Application {
 				lastNanoTime = currentNanoTime;
 				
 				//if(!gamePause && !rocket.isExplosion()) {
+					
 					processInput();
 					updateGame();
 					renderGame();
@@ -114,7 +119,6 @@ public class Main extends Application {
 			}
 		};
 		timer.start();
-
 		
 	}
 
@@ -367,7 +371,7 @@ public class Main extends Application {
 		threads.add(coinThread);
 	}
 	
-	private void initSatellite(){
+	/*private void initSatellite(){
 		Thread satelliteThread = new Thread(new Runnable() {
 			public void run() {
 				int k=0;
@@ -388,5 +392,5 @@ public class Main extends Application {
 		});
 		satelliteThread.start();
 		threads.add(satelliteThread);
-	}
+	}*/
 }
