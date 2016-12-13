@@ -23,7 +23,7 @@ public class Rocket implements IRenderable{
 	private boolean engineSoundPlayed;
 	private boolean isvisible;
 
-	private static final double GRAVITY = 0.01;
+	private static final double GRAVITY = 9.8 / 180;
 	
 	private double longitudinalForce, lateralForce;
 	

@@ -73,15 +73,15 @@ public class Main extends Application {
 		startScreen = new VBox(20);
 		startScreen.setPrefSize(480, 720);
 
-		Slider sliderStageOneMass = new Slider(1000, 5000, 10000);
-		Slider sliderStageOneEnginePropellantRate = new Slider(1, 20, 5);
-		Slider sliderStageOneEngineThrustRate = new Slider(100, 5000, 500);
-		Slider sliderStageOnePropellantMass = new Slider(1000, 20000, 5000);
-		Slider sliderStageTwoMass = new Slider(500, 5000, 2000);
-		Slider sliderStageTwoEnginePropellantRate = new Slider(1, 10, 2);
-		Slider sliderStageTwoEngineThrustRate = new Slider(100, 4000, 400);
-		Slider sliderStageTwoPropellantMass = new Slider(500, 10000, 2000);
-		Slider sliderPayloadMass = new Slider(100, 5000, 500);
+		Slider sliderStageOneMass = new Slider(10000, 50000, 22200);
+		Slider sliderStageOneEnginePropellantRate = new Slider(10000, 40000, 25000);
+		Slider sliderStageOneEngineThrustRate = new Slider(1000000, 10000000, 7607000);
+		Slider sliderStageOnePropellantMass = new Slider(100000, 600000, 409500);
+		Slider sliderStageTwoMass = new Slider(1000, 10000, 4000);
+		Slider sliderStageTwoEnginePropellantRate = new Slider(1000, 4000, 2500);
+		Slider sliderStageTwoEngineThrustRate = new Slider(500000, 2000000, 934000);
+		Slider sliderStageTwoPropellantMass = new Slider(50000, 200000, 107500);
+		Slider sliderPayloadMass = new Slider(5000, 50000, 20000);
 		Button playButton = new Button("Play");
 				
 		startScreen.getChildren().add(sliderStageOneMass);
@@ -253,8 +253,8 @@ public class Main extends Application {
 		gameStart = false;
 		
 		Rocket falcon9 = new Rocket(220, 395,
-		          new RocketStage(stageOneMass, new Engine(stageOneEnginePropellantRate, stageOneEngineThrustRate), new Propellant(stageOnePropellantMass)), 
-		          new RocketStage(stageTwoMass, new Engine(stageTwoEnginePropellantRate, stageTwoEngineThrustRate), new Propellant(stageTwoPropellantMass)), 
+		          new RocketStage(stageOneMass, new Engine(stageOneEnginePropellantRate/60, stageOneEngineThrustRate/300), new Propellant(stageOnePropellantMass)), 
+		          new RocketStage(stageTwoMass, new Engine(stageTwoEnginePropellantRate/60, stageTwoEngineThrustRate/300), new Propellant(stageTwoPropellantMass)), 
 		          new Payload(payloadMass));
 		
 		rocket = falcon9;
