@@ -82,7 +82,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		isEnding = false;
-		startScreen = new VBox(20);
+		startScreen = new VBox(10);
 		startScreen.setPrefSize(480, 720);
 
 		Slider sliderStageOneMass = new Slider(10000, 50000, 22200);
@@ -95,11 +95,51 @@ public class Main extends Application {
 		Slider sliderStageTwoPropellantMass = new Slider(50000, 200000, 107500);
 		Slider sliderPayloadMass = new Slider(5000, 50000, 20000);
 		Button playButton = new Button("Play");
-		Label lb = new Label("");
+		
+		Label spacerace = new Label("Space Race");
+		spacerace.setFont(Font.font("Arial", 30));
+		//spacerace.setTextFill(Color.BLACK);
+		spacerace.setText("Space Race");
+		
+		Label lb1 = new Label("Rocket stage one mass :");
+		Label lb2 = new Label("");
+		Label lb3 = new Label("");
+		Label lb4 = new Label("");
+		Label lb5 = new Label("");
+		Label lb6 = new Label("");
+		Label lb7 = new Label("");
+		Label lb8 = new Label("");
+		Label lb9 = new Label("");
 		SimpleIntegerProperty s1 = new SimpleIntegerProperty();
-		lb.textProperty().bind(sliderStageOneEnginePropellantRate.valueProperty().asString());
+		SimpleIntegerProperty s2 = new SimpleIntegerProperty();
+		SimpleIntegerProperty s3 = new SimpleIntegerProperty();
+		SimpleIntegerProperty s4 = new SimpleIntegerProperty();
+		SimpleIntegerProperty s5 = new SimpleIntegerProperty();
+		SimpleIntegerProperty s6 = new SimpleIntegerProperty();
+		SimpleIntegerProperty s7 = new SimpleIntegerProperty();
+		SimpleIntegerProperty s8 = new SimpleIntegerProperty();
+		SimpleIntegerProperty s9 = new SimpleIntegerProperty();
+		//lb1.textProperty().bind(sliderStageOneEnginePropellantRate.valueProperty().asString());
 		s1.bind(sliderStageOneMass.valueProperty());
+		lb1.textProperty().bind(s1.asString());
+		s2.bind(sliderStageOneEnginePropellantRate.valueProperty());
+		lb2.textProperty().bind(s2.asString());
+		s3.bind(sliderStageOneEngineThrustRate.valueProperty());
+		lb3.textProperty().bind(s3.asString());
+		s4.bind(sliderStageOnePropellantMass.valueProperty());
+		lb4.textProperty().bind(s4.asString());
+		s5.bind(sliderStageTwoMass.valueProperty());
+		lb5.textProperty().bind(s5.asString());
+		s6.bind(sliderStageTwoEnginePropellantRate.valueProperty());
+		lb6.textProperty().bind(s6.asString());
+		s7.bind(sliderStageTwoEngineThrustRate.valueProperty());
+		lb7.textProperty().bind(s7.asString());
+		s8.bind(sliderStageTwoPropellantMass.valueProperty());
+		lb8.textProperty().bind(s8.asString());
+		s9.bind(sliderPayloadMass.valueProperty());
+		lb9.textProperty().bind(s9.asString());
 				
+		startScreen.getChildren().add(spacerace);
 		startScreen.getChildren().add(sliderStageOneMass);
 		startScreen.getChildren().add(sliderStageOneEnginePropellantRate);
 		startScreen.getChildren().add(sliderStageOneEngineThrustRate);
@@ -110,7 +150,15 @@ public class Main extends Application {
 		startScreen.getChildren().add(sliderStageTwoPropellantMass);
 		startScreen.getChildren().add(sliderPayloadMass);
 		startScreen.getChildren().add(playButton);
-		startScreen.getChildren().add(lb);
+		startScreen.getChildren().add(lb1);
+		startScreen.getChildren().add(lb2);
+		startScreen.getChildren().add(lb3);
+		startScreen.getChildren().add(lb4);
+		startScreen.getChildren().add(lb5);
+		startScreen.getChildren().add(lb6);
+		startScreen.getChildren().add(lb7);
+		startScreen.getChildren().add(lb8);
+		startScreen.getChildren().add(lb9);
 		
 		startScreen.setAlignment(Pos.CENTER);
 		
