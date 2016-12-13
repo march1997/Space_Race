@@ -1,7 +1,6 @@
 package rocket;
 
 import exceptions.OutOfPropellantException;
-import javafx.scene.canvas.GraphicsContext;
 
 public class Engine {
 	

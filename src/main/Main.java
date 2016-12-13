@@ -7,19 +7,11 @@ import graphics.*;
 import rocket.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
-import java.util.zip.InflaterInputStream;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -27,20 +19,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import obstacle.Coin;
 import obstacle.Fivecoin;
 import obstacle.Onecoin;
@@ -56,8 +44,6 @@ public class Main extends Application {
 	
 	private VBox startScreen;
 	private Scene startScene;
-
-	private boolean playClicked = false;
 	
 	private GameScreen gameScreen;
 	private Scene gameScene;
@@ -104,7 +90,7 @@ public class Main extends Application {
 		
 		Label spacerace = new Label("Space Race");
 		spacerace.setFont(Font.font("Consolas", 40));
-		spacerace.setTextFill(Color.GREEN);
+		spacerace.setTextFill(Color.WHEAT);
 		spacerace.setText("Space Race");
 		
 		Label lb10 = new Label("Rocket stage one mass : ");
@@ -223,7 +209,6 @@ public class Main extends Application {
 					
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
 						gameScreen = new GameScreen();
 						gameScene = new Scene(gameScreen);
 						primaryStage.setScene(gameScene);
@@ -241,6 +226,7 @@ public class Main extends Application {
 
 								double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
 								lastNanoTime = currentNanoTime;
+								System.out.println(elapsedTime);
 								if(!isEnding && !gamePause){
 									processInput();
 									updateGame();
@@ -371,7 +357,7 @@ public class Main extends Application {
 						@Override
 						public void run() {
 							outoffuel = true;
-							gameScreen.fuel = "OUT OF FUEL";
+							GameScreen.fuel = "OUT OF FUEL";
 							isEnding = true;
 						}
 					});
@@ -411,10 +397,9 @@ public class Main extends Application {
 					Thread.sleep(100); //wait for application start
 					Resources.soundtrack.play(0.05);
 					Resources.ldgoforlaunch.play();
-					gameStart = true;
 					Thread.sleep(6000); //wait for go for launch before playing countdown
 					Resources.countdown.play();
-					Thread.sleep(5000); //wait for countdown before accepting input
+					Thread.sleep(3000); //wait for countdown before accepting input
 					gameStart = true;
 				} catch (InterruptedException e) {
 					e.printStackTrace();

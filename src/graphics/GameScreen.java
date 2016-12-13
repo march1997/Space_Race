@@ -22,9 +22,9 @@ public class GameScreen extends StackPane{
 	private Canvas canvas;
 	private WritableImage croppedImage;
 	private int backgroundY = downMostY; //use to move background image
-	private int explosioncount = 0;
+	private int explosionCount = 0;
 	
-	public static GraphicsContext gc;
+	public GraphicsContext gc;
 	public static String fuel = "100 %";
 
 	public GameScreen() {
@@ -41,11 +41,11 @@ public class GameScreen extends StackPane{
 		croppedImage = new WritableImage(Resources.backgroundImage.getPixelReader(), 0, backgroundY, WIDTH, HEIGHT); // a moving background
 		gc.drawImage(croppedImage, 0, 0);
 		if(!rocket.isVisible()){
-			explosioncount += 1;
+			explosionCount += 1;
 			rocket.setHorizontalSpeed(0);
 			rocket.setVerticalSpeed(0);
 		}
-		if(!rocket.isVisible() && explosioncount <= 65){
+		if(!rocket.isVisible() && explosionCount <= 65){
 			gc.drawImage(Resources.explosionImage, rocket.getX(), rocket.getY());
 		}
 		for(int i = IRenderableHolder.getInstance().getEntities().size() - 1 ; i >= 0  ; i--) {

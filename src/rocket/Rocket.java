@@ -15,12 +15,12 @@ public class Rocket implements IRenderable{
 	private double x, y, width, height;
 	private double pitch;
 	private double verticalSpeed, horizontalSpeed, rotationalSpeed;
-	private double verticalAcceleration, horizontalAcceleration, rotationalAcceleration;
-	private double gooutx = 0;
-	private double goouty = 0;
+	private double verticalAcceleration, horizontalAcceleration;
+	private double goOutX = 0;
+	private double goOutY = 0;
 
 	private int stageCount;
-	private int moveout = 0;
+	private int moveOut = 0;
 	private int count = 0;
 	
 	private boolean isPropelling;
@@ -117,12 +117,12 @@ public class Rocket implements IRenderable{
 		else{
 			if(count == 0){
 				count += 1;
-				gooutx = x;
-				goouty = y;
+				goOutX = x;
+				goOutY = y;
 			}
-			moveout += 20;
+			moveOut += 20;
 			gc.drawImage(Resources.rocketImageHalfUp, x, y);
-			gc.drawImage(Resources.rocketImageHalfDown, gooutx + moveout, goouty + 75);
+			gc.drawImage(Resources.rocketImageHalfDown, goOutX + moveOut, goOutY + 75);
 		}
 		
 		if(isPropelling && !Main.outoffuel){

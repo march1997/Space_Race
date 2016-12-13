@@ -1,7 +1,6 @@
 package obstacle;
 
 import graphics.IRenderable;
-import graphics.IRenderableHolder;
 import javafx.scene.canvas.GraphicsContext;
 import main.Main;
 import rocket.Rocket;
