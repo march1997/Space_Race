@@ -2,27 +2,32 @@ package main;
 
 import exceptions.*;
 
+
 import graphics.*;
 import rocket.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.zip.InflaterInputStream;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import obstacle.Coin;
@@ -83,6 +88,12 @@ public class Main extends Application {
 		Slider sliderStageTwoPropellantMass = new Slider(500, 10000, 2000);
 		Slider sliderPayloadMass = new Slider(100, 5000, 500);
 		Button playButton = new Button("Play");
+		Button bt = new Button();
+		Label lb = new Label("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		lb.textProperty().bind(sliderStageOneEnginePropellantRate.valueProperty().asString());
+		SimpleIntegerProperty s = new SimpleIntegerProperty();
+		s.bind(sliderStageOneMass.valueProperty());
+		bt.textProperty().bind(s.asString());
 				
 		startScreen.getChildren().add(sliderStageOneMass);
 		startScreen.getChildren().add(sliderStageOneEnginePropellantRate);
@@ -94,6 +105,8 @@ public class Main extends Application {
 		startScreen.getChildren().add(sliderStageTwoPropellantMass);
 		startScreen.getChildren().add(sliderPayloadMass);
 		startScreen.getChildren().add(playButton);
+		startScreen.getChildren().add(bt);
+		startScreen.getChildren().add(lb);
 		
 		startScreen.setAlignment(Pos.CENTER);
 		
@@ -120,7 +133,8 @@ public class Main extends Application {
 						initListener();
 						initRocket();
 						initCoin();
-						initPlane();
+						//initPlane();
+						initSatellite();
 						lastNanoTime = System.nanoTime();
 						AnimationTimer timer = new AnimationTimer() {
 
@@ -207,6 +221,12 @@ public class Main extends Application {
 				if(plane.isCollide(rocket)){
 					System.out.println("Collide");
 					plane.collide(rocket);
+				}
+			}
+			else if(r instanceof Satellite){
+				Satellite satellite = (Satellite) r;
+				if(satellite.isCollide(rocket)){
+					satellite.collide(rocket);
 				}
 			}
 		}
@@ -389,14 +409,14 @@ public class Main extends Application {
 				while(true){
 					Random rand = new Random();
 					k-=200;
-					if(count>50){
+					if(count>70){
 						break;
 					}
 					count+=1;
 					int random = rand.nextInt(10) + 1; //random number min 1 max 10
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
 					//int randomY = rand.nextInt(200) - 200;
-					int randomY = k;
+					int randomY = rand.nextInt(100) + k;
 					//try {
 						//Thread.sleep(3000);
 						if(random <= 7){ // probability to create onecoin is 70%
@@ -418,18 +438,19 @@ public class Main extends Application {
 	private void initSatellite(){
 		Thread satelliteThread = new Thread(new Runnable() {
 			public void run() {
-				int k=0;
-				int count=0;
+				int k = -2880;
+				int count = 0;
 				while(true){
 					Random rand = new Random();
-					k-=200;
 					if(count>10){
 						break;
 					}
 					count+=1;
-					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
+					k-=500;
+					int randomX = rand.nextInt((int) (480-new Satellite(0, 0).getWidth()))+1;
 					//int randomY = rand.nextInt(200) - 200;
-					int randomY = k;
+					int randomY = rand.nextInt(200) + k;
+					IRenderableHolder.getInstance().getEntities().add(new Satellite(randomX, randomY));
 					
 				}
 			}

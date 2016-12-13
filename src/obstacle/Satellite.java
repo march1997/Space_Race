@@ -3,6 +3,7 @@ package obstacle;
 import graphics.IRenderable;
 import javafx.scene.canvas.GraphicsContext;
 import main.Resources;
+import rocket.Rocket;
 
 public class Satellite implements IRenderable{
 	
@@ -32,5 +33,20 @@ public class Satellite implements IRenderable{
 	
 	public int getHeight(){
 		return HEIGHT;
+	}
+	
+	public void still(double d){
+		this.y -= d;
+	}
+	
+	public boolean isCollide(Rocket rocket){
+		if(rocket.getX() >= x && rocket.getX() <= x + WIDTH && rocket.getY() >= y && rocket.getY() <= y + HEIGHT){
+			return true;
+		}
+		return false;
+	}
+	
+	public void collide(Rocket rocket){
+		rocket.explosion();
 	}
 }

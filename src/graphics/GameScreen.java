@@ -4,6 +4,7 @@ import main.Main;
 import main.Resources;
 import obstacle.Coin;
 import obstacle.Plane;
+import obstacle.Satellite;
 import rocket.Rocket;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -87,6 +88,10 @@ public class GameScreen extends StackPane{
 				else if(o instanceof Plane){
 					Plane plane = (Plane) o;
 					plane.still(d);
+				}
+				else if(o instanceof Satellite){
+					Satellite satellite = (Satellite) o;
+					satellite.still(d);
 				}
 			}
 			if(backgroundY >= downMostY){
