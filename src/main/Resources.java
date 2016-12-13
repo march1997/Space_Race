@@ -49,7 +49,7 @@ public class Resources {
 
 		soundtrack = new AudioClip(ClassLoader.getSystemResource("audio/unity.mp3").toString());
 		ldgoforlaunch = new AudioClip(ClassLoader.getSystemResource("audio/ldgoforlaunch.mp3").toString());
-		countdown = new AudioClip(ClassLoader.getSystemResource("audio/countdown.mp3").toString());
+		countdown = new AudioClip(ClassLoader.getSystemResource("audio/countdownedit.mp3").toString());
 		stageonepropulsionnominal = new AudioClip(ClassLoader.getSystemResource("audio/stageonepropulsionnominal.mp3").toString());
 		stageseperationconfirmed = new AudioClip(ClassLoader.getSystemResource("audio/stageseperationconfirmed.mp3").toString());
 		enginecombustion = new AudioClip(ClassLoader.getSystemResource("audio/enginecombustion.mp3").toString());

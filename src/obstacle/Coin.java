@@ -71,7 +71,7 @@ public abstract class Coin implements IRenderable{
 			|| (this.x <= rocket.getX() && this.x + this.getWidth() >= rocket.getX() && this.y <= rocket.getY() + rocket.getHeight() && this.y + this.getHeight() >= rocket.getY() + rocket.getHeight())
 			|| (this.x <= rocket.getX() + rocket.getWidth() && this.x + this.getWidth() >= rocket.getX() + rocket.getWidth() && this.y <= rocket.getY() + rocket.getHeight() / 2 && this.y + this.getHeight() >= rocket.getY() + rocket.getHeight() / 2)
 			|| (this.x <= rocket.getX() + rocket.getWidth() && this.x + this.getWidth() >= rocket.getX() + rocket.getWidth() && this.y <= rocket.getY() && this.y + this.getHeight() >= rocket.getY())	
-				){
+			){
 			return true;
 		}
 		return false;

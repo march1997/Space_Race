@@ -68,24 +68,18 @@ public class Rocket implements IRenderable{
 		thrust.setAngle(this.pitch);
 		longitudinalForce = thrust.getForce() * Math.sin(Math.toRadians(thrust.getAngle()+90));
 		lateralForce = thrust.getForce() * Math.cos(Math.toRadians(thrust.getAngle()-90));
-//		longitudinalForce = -1*Math.sin(Math.toRadians(thrust.getAngle()+90));
-//		lateralForce = Math.cos(Math.toRadians(thrust.getAngle()-90));
 	}
 	
 	public void accelerate() {
 		
 		verticalAcceleration = -1 * (longitudinalForce * Math.cos(Math.toRadians(pitch)) + lateralForce * Math.sin(Math.toRadians(pitch)) - (GRAVITY * getMass())) / getMass();
 		horizontalAcceleration = 	(longitudinalForce * Math.sin(Math.toRadians(pitch)) + lateralForce * Math.cos(Math.toRadians(pitch))) / getMass();
-//		verticalAcceleration = longitudinalForce/20 + GRAVITY;
-//		horizontalAcceleration = lateralForce/20;
-//		System.out.println(this.verticalAcceleration + " " + this.horizontalAcceleration + " " + pitch);
 		
 		verticalSpeed += verticalAcceleration;
 		horizontalSpeed += horizontalAcceleration;
 		
 		longitudinalForce = 0;
 		lateralForce = 0;
-//		System.out.println(verticalAcceleration + " " + horizontalAcceleration);
 	}
 	
 	public void move() {

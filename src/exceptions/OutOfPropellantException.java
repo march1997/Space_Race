@@ -11,5 +11,6 @@ import main.Main;
 
 public class OutOfPropellantException extends Exception{
 	public OutOfPropellantException(){
+
 	}
 }

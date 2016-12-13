@@ -20,9 +20,8 @@ public class GameScreen extends StackPane{
 	private static final int downMostY = (int) (Resources.backgroundImage.getHeight()-HEIGHT);
 	
 	private Canvas canvas;
-	//private GraphicsContext gc;
 	private WritableImage croppedImage;
-	private int backgroundY = downMostY; //use to move background image = backgroundheight-gamescreenheight
+	private int backgroundY = downMostY; //use to move background image
 	private int explosioncount = 0;
 	
 	public static GraphicsContext gc;
@@ -68,9 +67,6 @@ public class GameScreen extends StackPane{
 		if((backgroundY <= 0 || backgroundY + d <= 0) && d < 0){
 			backgroundY = 0;
 		}
-		/*else if(backgroundY >= downMostY && backgroundY + d >= downMostY && d >= 0 ){
-			backgroundY = downMostY;
-		}*/
 		else{
 			if(d > 0 && d < 1){
 				d = 1;

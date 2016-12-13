@@ -241,11 +241,12 @@ public class Main extends Application {
 
 								double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
 								lastNanoTime = currentNanoTime;
-								if(!isEnding){
+								if(!isEnding && !gamePause){
 									processInput();
 									updateGame();
 								}
 									renderGame();
+									System.out.println(gamePause);
 							}
 						};
 						timer.start();
@@ -354,26 +355,6 @@ public class Main extends Application {
 		}
 		System.out.println(rocket.toString());
 		
-		/*if((!rocket.isVisible() && explosiontime == 1) || (rocket.getY() <= 0 && explosiontime == 0) || (isEnding && explosiontime == 0)){ // show score at the end of the game
-			explosiontime += 1;
-			isEnding = true;
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Space Race");
-			alert.setHeaderText(null);
-			alert.setContentText("Your score is " + score + "\n" + "Thank you for playing!");
-			alert.show();
-			alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
-				
-				@Override
-				public void handle(DialogEvent event) {
-					System.exit(0);
-				}
-			});
-			for(Thread thread : threads){
-				thread.interrupt();
-			}
-		}*/
-		
 		if(rocket.isRocketStageOne() && rocket.getY() <= 260){
 			rocket.changeState();
 		}
@@ -382,7 +363,7 @@ public class Main extends Application {
 	protected void processInput() {
 		
 		if(gameStart){
-			if(keysPressed.contains(KeyCode.UP)) {
+			if(keysPressed.contains(KeyCode.UP) && !isEnding) {
 				try {
 					rocket.propel();
 				} catch (OutOfPropellantException e) {
@@ -421,7 +402,6 @@ public class Main extends Application {
 		
 		rocket = falcon9;
 
-		//IRenderableHolder.getInstance().getEntities().add(falcon9);
 		IRenderableHolder.getInstance().getEntities().add(rocket);
 		
 		Thread backgroundMusic = new Thread(new Runnable() {
@@ -434,7 +414,7 @@ public class Main extends Application {
 					gameStart = true;
 					Thread.sleep(6000); //wait for go for launch before playing countdown
 					Resources.countdown.play();
-					Thread.sleep(10000); //wait for countdown before accepting input
+					Thread.sleep(5000); //wait for countdown before accepting input
 					gameStart = true;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -502,7 +482,6 @@ public class Main extends Application {
 					Random rand = new Random();
 					int randomX = rand.nextInt((int) (480-new Onecoin(0, 0).getWidth()))+1;
 					int randomspeed = rand.nextInt(3) + 1;
-					//int randomY = k;
 					int randomY = - rand.nextInt(200) + k;
 					System.out.println(randomY);
 					count += 1;
@@ -584,7 +563,6 @@ public class Main extends Application {
 					int randomX = rand.nextInt((int) (480 - new Satellite(0, 0).getWidth()))+1;
 					int randomY = rand.nextInt(200) + k;
 					IRenderableHolder.getInstance().getEntities().add(new Satellite(randomX, randomY));
-					
 				}
 			}
 		});
