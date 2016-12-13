@@ -14,8 +14,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -32,13 +34,18 @@ public class Main extends Application {
 	
 	private Rocket rocket;
 	
+	private VBox startScreen;
+	private Scene startScene;
+
+	private boolean playClicked = false;
+	
 	private GameScreen gameScreen;
-	private Scene scene;
+	private Scene gameScene;
 	
 	public static int score = 0;
 	public static boolean outoffuel = false;
 	
-	private boolean gameStart;
+	private boolean gameStart = false;
 	
 	private boolean gamePause;
 
@@ -46,16 +53,42 @@ public class Main extends Application {
 	
 	private long lastNanoTime;
 	
+	
 
 	@Override
 	public void start(Stage primaryStage) {
-		gameScreen = new GameScreen();
-		scene = new Scene(gameScreen);
 		
-		primaryStage.setScene(scene);
+		startScreen = new VBox(20);
+
+		Slider sliderStageOneMass = new Slider(1000, 5000, 10000);
+		Slider sliderStageOneEnginePropellantRate = new Slider(1, 20, 5);
+		Slider sliderStageOneEngineThrustRate = new Slider(100, 5000, 500);
+		Slider sliderStageOnePropellantMass = new Slider(1000, 20000, 5000);
+		Slider sliderStageTwoMass = new Slider(500, 5000, 2000);
+		Slider sliderStageTwoEnginePropellantRate = new Slider(1, 10, 2);
+		Slider sliderStageTwoEngineThrustRate = new Slider(100, 4000, 400);
+		Slider sliderStageTwoPropellantMass = new Slider(500, 10000, 2000);
+		Slider sliderPayloadMass = new Slider(100, 5000, 500);
+				
+		startScreen.getChildren().add(sliderStageOneMass);
+		startScreen.getChildren().add(sliderStageOneEnginePropellantRate);
+		startScreen.getChildren().add(sliderStageOneEngineThrustRate);
+		startScreen.getChildren().add(sliderStageOnePropellantMass);
+		startScreen.getChildren().add(sliderStageTwoMass);
+		startScreen.getChildren().add(sliderStageTwoEnginePropellantRate);
+		startScreen.getChildren().add(sliderStageTwoEngineThrustRate);
+		startScreen.getChildren().add(sliderStageTwoPropellantMass);
+		startScreen.getChildren().add(sliderPayloadMass);
+				
+		startScene = new Scene(startScreen);
+		primaryStage.setScene(startScene);
 		primaryStage.setTitle("Space Race");
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		
+		gameScreen = new GameScreen();
+		gameScene = new Scene(gameScreen);
+		primaryStage.setScene(gameScene);
 
 		initResources();
 		initListener();
@@ -72,7 +105,6 @@ public class Main extends Application {
 				
 				double elapsedTime = (currentNanoTime - lastNanoTime) / 1000000.0;
 				lastNanoTime = currentNanoTime;
-
 				
 				//if(!gamePause && !rocket.isExplosion()) {
 					processInput();
@@ -206,7 +238,7 @@ public class Main extends Application {
 
 	private void initListener() {
 		
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			
 			@Override
 			public void handle(KeyEvent arg0) {
@@ -221,7 +253,7 @@ public class Main extends Application {
 			
 		});
 		
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+		gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent arg0) {
